@@ -11,7 +11,7 @@
             <div class="swiper-slide" style="background-image: url('template/images/slider/2.jpg'); background-position: center top;">
                 <div class="container clearfix">
                     <div class="slider-caption">
-                        <h2>Welcome to Canvas</h2>
+                        <h2>Welcome to Impulse Trends</h2>
                         <p class="d-none d-sm-block">Create just what you need for your Perfect Website. Choose from a wide range of Elements &amp; simply put them on your own Canvas.</p>
                     </div>
                 </div>

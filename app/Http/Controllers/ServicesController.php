@@ -28,9 +28,9 @@ class ServicesController extends Controller
     {   
         // get all services
         $services = DB::select('select * from service_tab');
-        if($services->isEmpty()){
-            $services='';   //if not found
-        }
+        // if($services->isEmpty()){
+        //     $services='';   //if not found
+        // }
         return view('services')->with('services',$services);
     }
 }

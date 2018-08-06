@@ -238,59 +238,8 @@
                                 <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards with a Retina &amp; Responsive Approach. Browse the amazing Features this template offers.</p>
 
                                 <div class="line" style="margin: 30px 0;"></div>
-
-                                <div class="row">
-
-                                    <div class="col-lg-3 col-6 bottommargin-sm widget_links">
-                                        <ul>
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">About</a></li>
-                                            <li><a href="#">FAQs</a></li>
-                                            <li><a href="#">Support</a></li>
-                                            <li><a href="#">Contact</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-lg-3 col-6 bottommargin-sm widget_links">
-                                        <ul>
-                                            <li><a href="#">Shop</a></li>
-                                            <li><a href="#">Portfolio</a></li>
-                                            <li><a href="#">Blog</a></li>
-                                            <li><a href="#">Events</a></li>
-                                            <li><a href="#">Forums</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-lg-3 col-6 bottommargin-sm widget_links">
-                                        <ul>
-                                            <li><a href="#">Corporate</a></li>
-                                            <li><a href="#">Agency</a></li>
-                                            <li><a href="#">eCommerce</a></li>
-                                            <li><a href="#">Personal</a></li>
-                                            <li><a href="#">One Page</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-lg-3 col-6 bottommargin-sm widget_links">
-                                        <ul>
-                                            <li><a href="#">Restaurant</a></li>
-                                            <li><a href="#">Wedding</a></li>
-                                            <li><a href="#">App Showcase</a></li>
-                                            <li><a href="#">Magazine</a></li>
-                                            <li><a href="#">Landing Page</a></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col_one_third col_last">
-
-                            
-                            <div class="widget subscribe-widget clearfix">
+                                <div class="w3-col l6">
+                                    <div class="widget subscribe-widget clearfix">
                             <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
                             <div class="widget-subscribe-form-result"></div>
                             <form id="widget-subscribe-form" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
@@ -305,9 +254,13 @@
                                 </div>
                             </form>
                         </div>
+                                </div>
+                            </div>
 
+                        </div>
+
+                        <div class="col_one_third col_last">
                             <div class="widget clear-bottommargin-sm clearfix">
-
                                 <div class="row">
 
                                     <div class="col-lg-12 bottommargin-sm">
@@ -320,7 +273,7 @@
                                     <div class="col-lg-12 bottommargin-sm">
                                         <div class="footer-big-contacts">
                                             <span>Send an Email:</span>
-                                            info@canvas.com
+                                            info@impulse.com
                                         </div>
                                     </div>
 
@@ -362,13 +315,19 @@
                     <div class="container clearfix">
 
                         <div class="col_half">
-                            Copyrights &copy; 2014 All Rights Reserved by Canvas Inc.<br>
+                            Copyrights &copy; 2018 All Rights Reserved by Impulse World Trends.<br>
                             <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
                         </div>
 
                         <div class="col_half col_last tright">
                             <div class="copyrights-menu copyright-links clearfix">
-                                <a href="#">Home</a>/<a href="#">About Us</a>/<a href="#">Team</a>/<a href="#">Clients</a>/<a href="#">FAQs</a>/<a href="#">Contact</a>
+                                <a href="/">Home</a>/
+                                <a href="/trending">Trends</a>/
+                                <a href="/brands">Brands</a>/
+                                <a href="/projects">Projects</a>/
+                                <a href="/services">Services</a>/
+                                <a href="/contact-us">Contact</a>/
+                                <a href="/career">Career</a>
                             </div>
                         </div>
 

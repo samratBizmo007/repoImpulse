@@ -40,20 +40,7 @@ class ProductController extends Controller
     }
 
     /**
-     * get services into DB.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAllServices(Request $request)
-    {
-
-        // get all services
-        $services = DB::select('select * from service_tab');
-        echo json_encode($services);
-    }
-
-    /**
-     * Insert services into DB.
+     * Insert products into DB.
      *
      * @return \Illuminate\Http\Response
      */
@@ -215,19 +202,6 @@ class ProductController extends Controller
         $divVal=base64_encode($request->segment(4));
         return redirect()->to('admin/product#'.$divVal);
     }
-
-    /**
-     * Delete brand from DB.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function delBrand(Request $request)
-    {
-        // delete category name from  db
-        $checkDelete = DB::delete('delete from brand_tab where brand_id = ?', [$request->segment(2)]);
-        return redirect()->to('admin/dashboard');
-    }
-
 
 }
 

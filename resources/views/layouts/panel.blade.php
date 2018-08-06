@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="{{ asset('template/css/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <!-- Custom Theme Style -->
 
-    <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
+    
     <link href="{{ asset('assets/build/css/w3.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/build/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/alert/jquery-confirm.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/build/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -46,21 +47,23 @@
                         <div class="menu_section">
                             <!-- <h3>General</h3> -->
                             <ul class="nav side-menu">
-                                <li><a href="admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                                <li><a><i class="fa fa-cube"></i> Product Section <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
+                                <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+                                <li><a href="/admin/product"><i class="fa fa-cube"></i> Product Section </a>
+                                    <!-- <ul class="nav child_menu">
                                         <li><a href="admin/products/addproduct">Add New Product</a></li>
                                         <li><a href="admin/products/allproduct">View All Products</a></li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
-                                <li><a><i class="fa fa-list"></i> Trending Section <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
+                                <!-- <li><a href="/admin/project"><i class="fa fa-list"></i> Project Section </a> -->
+                                <li><a href="#"><i class="fa fa-list"></i> Project Section </a>
+                                    <!-- <ul class="nav child_menu">
                                         <li><a href="inventory/showinventory">View Inventory</a></li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
                                 <li><a href="/admin/services"><i class="fa fa-sliders"></i> Service Section </a>
                                 </li>
-                                <li><a href="employee/employee"><i class="fa fa-user"></i> Career Section </a>
+                                <li><a href="#"><i class="fa fa-user"></i> Career Section </a>
+                                <!-- <li><a href="/admin/career"><i class="fa fa-user"></i> Career Section </a> -->
 
                                 </li>
                             </ul>

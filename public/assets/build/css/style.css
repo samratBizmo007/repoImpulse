@@ -1,0 +1,125 @@
+.page_title{
+	background: #fff;
+    padding: 7px 10px;
+}
+
+.theme_bg{
+	background-color: #2A3F54;
+	color: #ECF0F1;
+}
+
+.theme_text{
+	color: #2A3F54;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.alert-fixed {
+    position:fixed; 
+    top: 0px; 
+    right: 0px; 
+    margin: 10px;
+    /*width: 100px;*/
+    z-index:9999; 
+    float: right;
+    border-radius:0px
+}
+
+/* ----------------------------------------------------------------
+    Flex Slider
+-----------------------------------------------------------------*/
+
+
+.fslider,
+.fslider .flexslider,
+.fslider .slider-wrap,
+.fslider .slide,
+.fslider .slide > a,
+.fslider .slide > img,
+.fslider .slide > a > img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.fslider { min-height: 32px; }
+
+
+.flex-container a:active,
+.flexslider a:active,
+.flex-container a:focus,
+.flexslider a:focus  { outline: none; border: none; }
+.slider-wrap,
+.flex-control-nav,
+.flex-direction-nav {margin: 0; padding: 0; list-style: none; border: none;}
+
+.flexslider {position: relative;margin: 0; padding: 0;}
+.flexslider .slider-wrap > .slide {display: none; -webkit-backface-visibility: hidden;}
+.flexslider .slider-wrap img {width: 100%; display: block;}
+.flex-pauseplay span {text-transform: capitalize;}
+
+.slider-wrap:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+html[xmlns] .slider-wrap {display: block;}
+* html .slider-wrap {height: 1%;}
+
+.no-js .slider-wrap > .slide:first-child {display: block;}
+
+.flex-viewport {
+    max-height: 2000px;
+    -webkit-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.flex-control-nav {
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    top: 14px;
+    right: 10px;
+    margin: 0;
+}
+
+.flex-control-nav li {
+    float: left;
+    display: block;
+    margin: 0 3px;
+    width: 10px;
+    height: 10px;
+}
+
+.flex-control-nav li a {
+    display: block;
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 10px !important;
+    height: 10px !important;
+    border: 1px solid #FFF;
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+
+.flex-control-nav li:hover a,
+.flex-control-nav li a.flex-active { background-color: #FFF; }

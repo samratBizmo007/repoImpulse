@@ -11,6 +11,10 @@
 .theme_text{
 	color: #2A3F54;
 }
+.theme_border{
+    border:1px solid;
+    border-color: lightgrey;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 5px;

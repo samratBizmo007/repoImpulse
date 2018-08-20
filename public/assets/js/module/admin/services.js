@@ -58,7 +58,7 @@ $scope.removeService = function (service_id) {
             $(this).remove(); 
           });
           //location.reload();
-        }, 2000);
+        }, 1500);
         $scope.getServices();
       }); 
      },
@@ -113,7 +113,7 @@ $("#addService_form").on('submit', function(e) {
             		$(".alert").fadeTo(500, 0).slideUp(500, function(){
             			$(this).remove(); 
             		});
-            	}, 5000);
+            	}, 2000);
             },
             error:function(data){
             	$('#formOutput').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');

@@ -26,9 +26,13 @@ class BrandsController extends Controller
      */
     public function index(Request $request)
     {
+        // get all products and categories
+        $menuCategories = DB::select('select * from category_tab order by category_name');
+        
+
         // get all brand details
         $brands = DB::select('select * from brand_tab');
-        return view('brands',['brands'=>$brands]);
+        return view('brands',['brands'=>$brands,'menuCategories' => $menuCategories]);
     }
     
     /**
@@ -39,6 +43,9 @@ class BrandsController extends Controller
     public function getBrand(Request $request)
     {
         //print_r(base64_decode($request->segment(3)));die();
+        // get all products and categories
+        $menuCategories = DB::select('select * from category_tab order by category_name');
+
         // get all brand details
         $brand_details = DB::select('select * from brand_tab where brand_id=?',[base64_decode($request->segment(3))]);
 
@@ -58,11 +65,12 @@ class BrandsController extends Controller
         ->join('project_tab', 'project_tab.project_id', '=', 'prod_proj_assoc_tab.project_id')
         ->select('*')
         ->where('product_tab.brand_id', '=', base64_decode($request->segment(3)))
+        ->orderBy('prod_proj_assoc_tab.project_id')
         ->get();
         if($related_projects->isEmpty()){
             $related_projects='';   //if not found
         }
 
-        return view('brands_info',['brand_details'=>$brand_details[0],'related_products'=>$related_products,'related_projects'=>$related_projects]);
+        return view('brands_info',['brand_details'=>$brand_details[0],'related_products'=>$related_products,'related_projects'=>$related_projects,'menuCategories' => $menuCategories]);
     }
 }

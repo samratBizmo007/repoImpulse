@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<title>Impulse Trends | <?php print_r($category_details); ?></title>
+<title>Impulse Trends | {{$category_details->category_name}}</title>
 <!-- Page Title
     ============================================= -->
     <section id="page-title">
 
         <div class="container clearfix">
-            <h1><?php print_r($category_details); ?></h1>
+            <h1>{{$category_details->category_name}}</h1>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?php print_r($category_details); ?></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$category_details->category_name}}</li>
             </ol>
         </div>
 
@@ -29,22 +29,18 @@
 
                             <div class="side-panel-wrap">
                                 <div class="widget clearfix ">
+                                    <h4 style="color: #AB0000"><i class="fa fa-list"></i> Categories</h4>
                                     <nav class="nav-tree nobottommargin">
                                         <ul>
-                                            <li><a href="portfolio-1.html"><i class="fa fa-snowflake-o w3-tiny"></i>C. P. Fitting</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
+                                            @if(!empty($menuCategories))
+                                            @foreach($menuCategories as $menu)
+                                            <li><a href="{{URL::to('/')}}/category/info/<?php echo base64_encode($menu->cat_id); ?>"><i class="fa fa-snowflake-o w3-tiny"></i>{{$menu->category_name}}</a>
                                             </li>
-                                            <li><a href="portfolio-2.html"><i class="fa fa-snowflake-o w3-tiny"></i>Sanitary ware</a>
+                                            @endforeach
+                                            @else
+                                            <li class="w3-center"> No Category Available </li>
+                                            @endif
+                                            <!-- <li><a href="portfolio-1.html"><i class="fa fa-snowflake-o w3-tiny"></i>C. P. Fitting</a>
                                                 <ul>
                                                     <li><a href="#">Product 1</a></li>
                                                     <li><a href="#">Product 2</a>
@@ -56,229 +52,7 @@
                                                     </li>
                                                     <li><a href="#">Product 3</a></li>
                                                 </ul>
-                                            </li>
-                                            <li><a href="portfolio-3.html"><i class="fa fa-snowflake-o w3-tiny"></i>Pex</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio.html"><i class="fa fa-snowflake-o w3-tiny"></i>Tece</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-5.html"><i class="fa fa-snowflake-o w3-tiny"></i>Tiles</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Roofing Tiles</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Kerakoll</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Wooden Floor</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Windows</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Kitchen</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Appliances</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Wardrobe</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Hunter Douglas</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Dorma</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>TCS</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Railing</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Thermory</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Forms &amp; Surfaces</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio-6.html"><i class="fa fa-snowflake-o w3-tiny"></i>Accessories</a>
-                                                <ul>
-                                                    <li><a href="#">Product 1</a></li>
-                                                    <li><a href="#">Product 2</a>
-                                                        <ul>
-                                                            <li><a href="#">SubProduct 1</a></li>
-                                                            <li><a href="#">SubProduct 2</a></li>
-                                                            <li><a href="#">SubProduct 3</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product 3</a></li>
-                                                </ul>
-                                            </li>                                            
-                                            <li><a href="#"><i class="fa fa-snowflake-o"></i>Others</a></li>
+                                            </li> -->
                                         </ul>
                                     </nav>
 
@@ -288,15 +62,15 @@
 
                                     <h4>Quick Contact</h4>
                                     <div class="quick-contact-form-result"></div>
-                                    <form id="quick-contact-form" name="quick-contact-form" action="include/quickcontact.php" method="post" class="quick-contact-form nobottommargin">
-                                        <div class="form-process"></div>
+                                    <form id="quickContact" name="quickContact" class="quick-contact-form nobottommargin">
                                         <input type="text" class="required sm-form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
                                         <input type="text" class="required sm-form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
                                         <textarea class="required sm-form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
                                         <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+                                        <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
                                         <button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin" value="submit">Send Email</button>
                                     </form>
-
+                                    <div id="formOutput"></div>
                                 </div>
 
                             </div>
@@ -309,343 +83,120 @@
                     <section class="content">
                         <div class="content-wrap">
                             <div class="container clearfix">
-                                
+
                                 <!-- related brands start -->
                                 <div class="w3-col l12">
                                     <div class="heading-block center" style="margin-bottom: 20px">
                                         <h3>Related Brands</h3>
-                                        <span>Checkout brands associated with <?php print_r($category_details); ?></span>
+                                        <span>Checkout brands associated with {{$category_details->category_name}}</span>
                                     </div>
 
-                                    <!-- Brands -->
-                                    <ul class="clients-grid grid-5 nobottommargin clearfix">
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/1.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/2.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/3.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/4.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/5.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/6.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/7.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/8.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/9.jpg" alt="Brand logo"></a></li>
-                                        <li><a href="{{URL::to('/')}}/brands/brand_name"><img src="{{URL::to('/')}}/template/images/clients/10.jpg" alt="Clients"></a></li>
-                                    </ul>
+                                    <div class="w3-col l12">
+                                        <!-- Brands -->
+                                        @if(empty($related_products))
+                                        <div class="w3-col l12 w3-center w3-padding">
+                                            <h3>No Brands Available</h3>
+                                        </div>
+                                        @else
+                                        @foreach ($related_products as $br)
+                                        <div class="w3-col l2 s6 w3-padding-small w3-margin-bottom">
+                                          <div class="w3-col l12">
+                                            <a class="btn w3-opacity w3-hover-opacity-off" href="{{URL::to('/')}}/brands/info/<?php echo base64_encode($br->brand_id); ?>" style="padding: 0;margin: 0">
+                                              <img src="{{URL::to('/')}}/{{$br->brand_image}}" class="img" style="width: 100%;height: 100px;">
+                                          </a>
+
+                                      </div>
+                                  </div>
+                                  @endforeach
+                                  @endif                                  
+                              </div>
+
+                          </div>
+                          <!-- related brands ends -->
+                          <div class="divider divider-center"><i class="icon-diamond"></i></div>
+                          <!-- related products starts -->
+                          <div class="w3-col l12">
+                            <div class="heading-block center" style="margin-bottom: 20px">
+                                <h3>Related Products</h3>
+                                <span>Checkout products associated with {{$category_details->category_name}}</span>
+                            </div>
+
+                            <!-- Products -->
+                            <div id="portfolio" class="portfolio grid-container clearfix">
+
+                                @if($related_products!='')
+                                @foreach($related_products as $prod)
+                                <?php 
+                                $img_arr=json_decode($prod->prod_image,TRUE);
+                                ?>
+                                <!-- Product div -->
+                                <article class="portfolio-item pf-media pf-icons">
+                                    <div class="portfolio-image" >
+                                        <img src="{{URL::to('/')}}/{{$img_arr[0]}}" style="height: 150px" alt="{{$prod->prod_name}} Image">
+                                        <div class="portfolio-overlay">
+                                            <a href="{{URL::to('/')}}/products/info/<?php echo base64_encode($prod->product_id); ?>" class="center-icon"><i class="icon-line-ellipsis"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-desc">
+                                        <h3><a href="{{URL::to('/')}}/products/info/<?php echo base64_encode($prod->product_id); ?>">{{$prod->prod_name}}</a></h3>
+                                    </div>
+                                </article>
+                                @endforeach
+                                @else
+                                <div class="w3-col l12 w3-center w3-padding">
+                                    <h4>No Product Available</h4>
                                 </div>
-                                <!-- related brands ends -->
-                                <div class="divider divider-center"><i class="icon-diamond"></i></div>
-                                <!-- related products starts -->
-                                <div class="w3-col l12">
-                                    <div class="heading-block center" style="margin-bottom: 20px">
-                                        <h3>Related Products</h3>
-                                        <span>Checkout products associated with <?php print_r($category_details); ?></span>
-                                    </div>
+                                @endif
 
-                                    <!-- Products -->
-                                    <div id="portfolio" class="portfolio grid-container clearfix">
+                            </div>
+                        </div>
+                        <!-- related products ends -->
 
-                                        <article class="portfolio-item pf-media pf-icons">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/1.jpg" alt="The Atmosphere">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3><a href="#">The Atmosphere</a></h3>
-                                                <span>Chicago, USA</span>
-                                            </div>
-                                        </article>
+                        <div class=" w3-col l12 nobottommargin">                            
+                            <div class="clear"></div>
+                            <div class="divider divider-center"><i class="icon-building"></i></div>
 
-                                        <article class="portfolio-item pf-illustrations">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/2.jpg" alt="Wavelength Structure">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Wavelength Structure</h3>
-                                                <span>Madrid, Spain</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-graphics pf-uielements">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/3.jpg" alt="Greenhouse Garden">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Greenhouse Garden</h3>
-                                                <span>Bali, Indonesia</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-icons pf-illustrations">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/4.jpg" alt="Industrial Hub">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Industrial Hub</h3>
-                                                <span>Beijing, China</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-uielements pf-media">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/5.jpg" alt="Corporate Headquarters">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Corporate Headquarters</h3>
-                                                <span>California, USA</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-graphics pf-illustrations">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/6.jpg" alt="Space Station">
-                                                <div class="portfolio-overlay" data-lightbox="gallery">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Space Station</h3>
-                                                <span>Moscow, Russia</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-uielements pf-icons">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/7.jpg" alt="Bent Architecture">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Bent Architecture</h3>
-                                                <span>Melbourne, Australia</span>
-                                            </div>
-                                        </article>
-
-                                        <article class="portfolio-item pf-graphics">
-                                            <div class="portfolio-image">
-                                                <img src="{{URL::to('/')}}/template/images/projects/8.jpg" alt="Lakeview Center">
-                                                <div class="portfolio-overlay">
-                                                    <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="portfolio-desc">
-                                                <h3>Lakeview Center</h3>
-                                                <span>Auckland, New Zealand</span>
-                                            </div>
-                                        </article>
-
-                                    </div>
-                                </div>
-                                <!-- related products ends -->
-                                
-                                <div class=" w3-col l12 nobottommargin">
-
-                                 
-                                    <div class="clear"></div>
-
-                                    <div class="divider divider-center"><i class="icon-building"></i></div>
-
-                        <!-- Related Portfolio Items
-                            ============================================= -->
+                            <!-- Related Portfolio Items ============================================= -->
                             <h4>Related Projects:</h4>
+                            @if($related_projects!='')
+                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="2" data-items-sm="3" data-items-xl="4">
+                                <?php $curr_proj=0; ?>
+                                @foreach($related_projects as $proj)
+                                <?php 
+                                if($proj->project_id==$curr_proj){
+                                    continue;
+                                }else{
+                                    $curr_proj=$proj->project_id;
+                                }
+                                $img_arr=json_decode($proj->proj_images,TRUE);
+                                ?>
+                                <!-- project div -->
 
-                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-xl="3">
-
-                                <div class="oc-item">
+                                <div class="oc-item" style="max-width: 200px;height: auto;">
                                     <div class="iportfolio">
                                         <div class="portfolio-image">
                                             <a href="portfolio-single.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/7.jpg" alt="Open Imagination">
+                                                <img src="{{URL::to('/')}}/{{$img_arr[0]}}" style="height: 150px" alt="{{$proj->proj_name}} Image" >
                                             </a>
                                             <div class="portfolio-overlay">
-                                                <a href="{{URL::to('/')}}/template/images/projects/8.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                                <a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+                                                <a href="{{URL::to('/')}}/{{$img_arr[0]}}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+                                                <a href="{{URL::to('/')}}/projects/info/<?php echo base64_encode($proj->project_id); ?>" class="right-icon"><i class="icon-line-ellipsis"></i></a>
                                             </div>
                                         </div>
                                         <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single.html">Open Imagination</a></h3>
-                                            <span><a href="#">Media</a>, <a href="#">Icons</a></span>
+                                            <h3><a href="{{URL::to('/')}}/projects/info/<?php echo base64_encode($proj->project_id); ?>">{{$proj->proj_name}}</a></h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/2.jpg" alt="Locked Steel Gate">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="{{URL::to('/')}}/template/images/projects/8.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                                <a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
-                                            <span><a href="#">Illustrations</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="#">
-                                                <img src="{{URL::to('/')}}/template/images/projects/3.jpg" alt="Mac Sunglasses">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="http://vimeo.com/89396394" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-                                                <a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
-                                            <span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="#">
-                                                <img src="{{URL::to('/')}}/template/images/projects/4.jpg" alt="Mac Sunglasses">
-                                            </a>
-                                            <div class="portfolio-overlay" data-lightbox="gallery">
-                                                <a href="{{URL::to('/')}}/template/images/projects/5.jpg" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/1.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single-gallery.html">Morning Dew</a></h3>
-                                            <span><a href="#">Icons</a>, <a href="#">Illustrations</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/5.jpg" alt="Console Activity">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="{{URL::to('/')}}/template/images/projects/4.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                                <a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single.html">Console Activity</a></h3>
-                                            <span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single-gallery.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/6.jpg" alt="Shake It!">
-                                            </a>
-                                            <div class="portfolio-overlay" data-lightbox="gallery">
-                                                <a href="{{URL::to('/')}}/template/images/projects/6.jpg" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/1.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/2.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/3.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single-gallery.html">Shake It!</a></h3>
-                                            <span><a href="#">Illustrations</a>, <a href="#">Graphics</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single-video.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/7.jpg" alt="Backpack Contents">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="http://www.youtube.com/watch?v=kuceVNBTJio" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-                                                <a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single-video.html">Backpack Contents</a></h3>
-                                            <span><a href="#">UI Elements</a>, <a href="#">Icons</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/8.jpg" alt="Sunset Bulb Glow">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="{{URL::to('/')}}/template/images/projects/7.jpg" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                                <a href="portfolio-single.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single.html">Sunset Bulb Glow</a></h3>
-                                            <span><a href="#">Graphics</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/1.jpg" alt="Bridge Side">
-                                            </a>
-                                            <div class="portfolio-overlay" data-lightbox="gallery">
-                                                <a href="{{URL::to('/')}}/template/images/projects/2.jpg" class="left-icon" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/8.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="{{URL::to('/')}}/template/images/projects/6.jpg" class="hidden" data-lightbox="gallery-item"></a>
-                                                <a href="portfolio-single-gallery.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single.html">Bridge Side</a></h3>
-                                            <span><a href="#">Illustrations</a>, <a href="#">Icons</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oc-item">
-                                    <div class="iportfolio">
-                                        <div class="portfolio-image">
-                                            <a href="portfolio-single-video.html">
-                                                <img src="{{URL::to('/')}}/template/images/projects/5.jpg" alt="Study Table">
-                                            </a>
-                                            <div class="portfolio-overlay">
-                                                <a href="http://vimeo.com/91973305" class="left-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
-                                                <a href="portfolio-single-video.html" class="right-icon"><i class="icon-line-ellipsis"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-desc">
-                                            <h3><a href="portfolio-single-video.html">Study Table</a></h3>
-                                            <span><a href="#">Graphics</a>, <a href="#">Media</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                @endforeach
                             </div><!-- .portfolio-carousel end -->
 
+                            @else
+                            <div class="w3-col l12 w3-center w3-padding">
+                                <h4>No Project Available</h4>
+                            </div>
+                            @endif                                
                         </div>
-
-
                         
                     </div>
                 </div>        

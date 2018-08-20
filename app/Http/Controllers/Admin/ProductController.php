@@ -34,7 +34,15 @@ class ProductController extends Controller
         $brands = DB::select('select * from brand_tab order by brand_id DESC');
 
         // get all products from DB
-        $products = DB::select('select * from product_tab order by product_id DESC');
+        $products = DB::table('product_tab')
+        ->join('brand_tab', 'product_tab.brand_id', '=', 'brand_tab.brand_id')
+        ->join('category_tab', 'product_tab.cat_id', '=', 'category_tab.cat_id')
+        ->select('*')
+        ->orderBy('product_tab.product_id','DESC')
+        ->get();
+        if($products->isEmpty()){
+            $products='';   //if not found
+        }
 
         return view('admin.product',['categories'=>$categories,'brands'=>$brands,'products'=>$products]);
     }
@@ -49,7 +57,7 @@ class ProductController extends Controller
         $image_json='';
         $vid_json='';
         $file_json='';
-
+//print_r($request->input('cat_id'));die();
         // image uploading code
         if($request->hasfile('prod_image'))
         {
@@ -91,7 +99,7 @@ class ProductController extends Controller
          //print_r($file_json);die();
         
         // insert category name into  db
-        $checkInsert = DB::insert('insert into product_tab (brand_id,cat_id,prod_name,prod_description,prod_image,prod_video,prod_files) values(?,?,?,?,?,?,?)', [$request->input('product_brand'),$request->input('product_category'),$request->input('product_name'),$request->input('product_description'),$image_json,$vid_json,$file_json]);
+        $checkInsert = DB::insert('insert into product_tab (brand_id,cat_id,location,prod_name,prod_description,prod_image,prod_video,prod_files) values(?,?,?,?,?,?,?,?)', [$request->input('product_brand'),$request->input('product_category'),$request->input('product_location'),$request->input('product_name'),$request->input('product_description'),$image_json,$vid_json,$file_json]);
         //print_r($checkInsert);die();
 
         if($checkInsert){
@@ -129,9 +137,28 @@ class ProductController extends Controller
      */
     public function updateChanges(Request $request)
     {      
+       // print_r($_POST);die();
+        $files="";
+        if($request->input('originalFiles')==''){
+           $files=""; 
+        }
         // update product details  db
-        $checkUpdate = DB::update('update product_tab set brand_id = ?,cat_id=?,prod_name=?,prod_description=?,prod_image=?,prod_video=?,prod_files=? where product_id=?', [$request->input('update_product_brand'),$request->input('update_product_category'),$request->input('update_product_name'),$request->input('update_product_description'),$request->input('originalImages'),$request->input('originalVids'),$request->input('originalFiles'),$request->input('id')]);
-        // // $checkUpdate =DB::table('product_tab')->where('product_id', $request->input('id'))->update(array('brand_id'=>$request->input('update_product_brand'))); 
+        //$checkUpdate = DB::update('update product_tab set brand_id = ?,cat_id=?,location=?,prod_name=?,prod_description=?,prod_image=?,prod_video=?,prod_files=? where product_id=?', [$request->input('update_product_brand'),$request->input('update_product_category'),$request->input('update_product_location'),$request->input('update_product_name'),$request->input('update_product_description'),$request->input('originalImages'),$request->input('originalVids'),$request->input('originalFiles'),$request->input('id')]);
+        
+        //print_r($checkUpdate);die();
+        $checkUpdate =DB::table('product_tab')->where('product_id', $request->input('id'))
+        ->update(
+            array(
+                'brand_id'=>$request->input('update_product_brand'),
+                'cat_id'=>$request->input('update_product_category'),
+                'location'=>$request->input('update_product_location'),
+                'prod_name'=>$request->input('update_product_name'),
+                'prod_description'=>$request->input('update_product_description'),
+                'prod_image'=>$request->input('originalImages'),
+                'prod_video'=>$request->input('originalVids'),
+                'prod_files'=>$files
+            )
+        ); 
         // // DB::table('product_tab')
         // //     ->where('product_id', $request->input('id'))
         // //     ->update(['brand_id' => $request->input('update_product_brand')]);

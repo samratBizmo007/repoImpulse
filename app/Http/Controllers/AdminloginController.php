@@ -82,4 +82,19 @@ class AdminloginController extends Controller
         // ]);
         return view('admin.resetpassword');
     }
+
+    /**
+     * admin logout module
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logoutUser(Request $request)
+    {
+       $request->session()->forget('sess_name');
+       $request->session()->forget('sess_role');
+       $request->session()->flush();
+       return redirect()->to('adminlogin');
+   }
+
+   
 }

@@ -6,7 +6,7 @@
 <section id="google-map" class="gmap">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15132.900528883341!2d73.8324251!3d18.5187258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf850342e151%3A0x9b53009ae375dcaf!2sImpulse+World+Trends!5e0!3m2!1sen!2sin!4v1532939570739" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
 </section>
-<section id="content">
+<section id="content" >
     <div class="content-wrap">
 
         <div class="container clearfix">
@@ -21,60 +21,66 @@
 
                                 <div class="contact-form-result"></div>
 
-                                <form class="nobottommargin" id="template-contactform" name="template-contactform" action="include/sendemail.php" method="post">
-
-                                    <div class="form-process"></div>
+                                <form class="nobottommargin" id="contactForm">
 
                                     <div class="col_one_third">
-                                        <label for="template-contactform-name">Name <small>*</small></label>
-                                        <input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" />
+                                        <label for="contactform-name">Name <small>*</small></label>
+                                        <input type="text" id="contactform-name" name="contactform-name" value="" class="sm-form-control required" />
                                     </div>
 
                                     <div class="col_one_third">
-                                        <label for="template-contactform-email">Email <small>*</small></label>
-                                        <input type="email" id="template-contactform-email" name="template-contactform-email" value="" class="required email sm-form-control" />
+                                        <label for="contactform-email">Email <small>*</small></label>
+                                        <input type="email" id="contactform-email" name="contactform-email" value="" class="required email sm-form-control" />
                                     </div>
 
                                     <div class="col_one_third col_last">
-                                        <label for="template-contactform-phone">Phone</label>
-                                        <input type="text" id="template-contactform-phone" name="template-contactform-phone" value="" class="sm-form-control" />
+                                        <label for="contactform-phone">Phone</label>
+                                        <input type="text" id="contactform-phone" name="contactform-phone" value="" class="sm-form-control" />
                                     </div>
+                                    <input type="hidden" id="_token" name="_token" value="{{csrf_token()}}">
 
                                     <div class="clear"></div>
 
                                     <div class="col_two_third">
-                                        <label for="template-contactform-subject">Subject <small>*</small></label>
-                                        <input type="text" id="template-contactform-subject" name="template-contactform-subject" value="" class="required sm-form-control" />
+                                        <label for="contactform-subject">Subject <small>*</small></label>
+                                        <input type="text" id="contactform-subject" name="contactform-subject" value="" class="required sm-form-control" />
                                     </div>
 
                                     <div class="col_one_third col_last">
-                                        <label for="template-contactform-service">Services</label>
-                                        <select id="template-contactform-service" name="template-contactform-service" class="sm-form-control">
-                                            <option value="">-- Select One --</option>
-                                            <option value="Wordpress">Wordpress</option>
-                                            <option value="PHP / MySQL">PHP / MySQL</option>
-                                            <option value="HTML5 / CSS3">HTML5 / CSS3</option>
-                                            <option value="Graphic Design">Graphic Design</option>
+                                        <label for="contactform-service">Services</label>
+                                        <select id="contactform-service" name="contactform-service" class="sm-form-control">
+                                            <option value="0">-- Select One --</option>
+                                            @if($all_services!='')
+                                            @foreach($all_services as $service)
+                                            <option value="{{$service->service_id}}">{{$service->service_title}}</option>
+                                            @endforeach
+                                            @else
+                                            <option disabled>No Service available</option>
+                                            @endif
                                         </select>
+                                        <label id="serviceError" class="w3-text-red w3-label"></label>
                                     </div>
 
                                     <div class="clear"></div>
 
                                     <div class="col_full">
-                                        <label for="template-contactform-message">Message <small>*</small></label>
-                                        <textarea class="required sm-form-control" id="template-contactform-message" name="template-contactform-message" rows="6" cols="30"></textarea>
+                                        <label for="contactform-message">Message <small>*</small></label>
+                                        <textarea class="required sm-form-control" id="contactform-message" name="contactform-message" rows="6" cols="30"></textarea>
                                     </div>
 
                                     <div class="col_full hidden">
-                                        <input type="text" id="template-contactform-botcheck" name="template-contactform-botcheck" value="" class="sm-form-control" />
+                                        <input type="text" id="contactform-botcheck" name="contactform-botcheck" value="" class="sm-form-control" />
                                     </div>
 
                                     <div class="col_full">
-                                        <button class="button button-3d nomargin" type="submit" id="template-contactform-submit" name="template-contactform-submit" value="submit">Send Message</button>
+                                        <button class="button button-3d nomargin" type="submit" id="submitButton" name="submitButton" value="submit"> Send Message </button>
                                     </div>
 
                                 </form>
+                                
                             </div>
+                            <div id="formOutput">
+                                </div>
 
                         </div><!-- .postcontent end -->
 
@@ -104,19 +110,9 @@
                                     <i class="icon-facebook"></i>
                                 </a>
 
-                                <a href="#" class="social-icon si-small si-dark si-twitter">
-                                    <i class="icon-twitter"></i>
-                                    <i class="icon-twitter"></i>
-                                </a>
-
-                                <a href="#" class="social-icon si-small si-dark si-pinterest">
-                                    <i class="icon-pinterest"></i>
-                                    <i class="icon-pinterest"></i>
-                                </a>
-
-                                <a href="#" class="social-icon si-small si-dark si-gplus">
-                                    <i class="icon-gplus"></i>
-                                    <i class="icon-gplus"></i>
+                                <a href="#" class="social-icon si-small si-dark si-instagram">
+                                    <i class="icon-instagram"></i>
+                                    <i class="icon-instagram"></i>
                                 </a>
 
                                 <a href="#" class="social-icon si-small si-dark fa fa-whatsapp">
@@ -139,4 +135,5 @@
 
 
             </section>
+            <script src="{{ asset('assets/js/module/contact.js') }}"></script>
             @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 
 class DashboardController extends Controller
@@ -46,13 +47,24 @@ class DashboardController extends Controller
      */
     public function addCategory(Request $request)
     {
-        $request->validate([
-            'category_name'=>'required'
-        ]);
 
+        // check category already added in DB
+        $catExist = DB::select('select * from category_tab where category_name=?',[$request->input('category_name')]);
+        //print_r($catExist);die();
+        if($catExist){
+            echo '<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning-</strong> Category already added.</div>';
+        }
+        else{
         // insert category name into  db
-        $checkInsert = DB::insert('insert into category_tab (category_name) values(?)', [$request->input('category_name')]);
-        return redirect()->to('admin/dashboard');
+            $checkInsert = DB::insert('insert into category_tab (category_name) values(?)', [$request->input('category_name')]);
+
+            if($checkInsert){
+                echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> New Category added.</div>';
+            }
+            else{
+                echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Category addition failed!</div>';
+            }
+        }
     }
 
     /**
@@ -62,9 +74,15 @@ class DashboardController extends Controller
      */
     public function delCategory(Request $request)
     {
+        //print_r($request->segment(2));die();
         // delete category name from  db
         $checkDelete = DB::delete('delete from category_tab where cat_id = ?', [$request->segment(2)]);
-        return redirect()->to('admin/dashboard');
+        if($checkDelete){
+            echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Category deleted.</div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Category deletion failed!</div>';
+        }
     }
 
     /**
@@ -104,7 +122,7 @@ class DashboardController extends Controller
      */
     public function addBrand(Request $request)
     {
-       
+
         $file = $request->file('brand_image');
         // getting image extension
         $extension = $file->getClientOriginalExtension(); 
@@ -129,6 +147,28 @@ class DashboardController extends Controller
     }
 
     /**
+     * update brand into DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBrand(Request $request)
+    {      
+        $link=$request->input('update_ext_link');
+        if($link==''){
+            $link='Null';
+        }
+        // update product details  db
+        $checkUpdate = DB::update('update brand_tab set brand_name = ?,description=?,external_link=? where brand_id=?', [$request->input('update_brand_name'),$request->input('update_description'),$link,$request->input('id')]);
+        
+        if($checkUpdate){
+            echo '<div class="alert alert-success alert-fixed alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Brand updated successfully.</div>';
+        }
+        else{
+            echo '<div class="alert alert-warning alert-fixed alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> You havent changed anything! Brand not updated</div>';
+        }
+    }
+
+    /**
      * Delete brand from DB.
      *
      * @return \Illuminate\Http\Response
@@ -145,5 +185,65 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Delete architect from DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delArch(Request $request)
+    {
+        // delete category name from  db
+        $checkDelete = DB::delete('delete from architect_tab where arch_id = ?', [$request->segment(2)]);
+        if($checkDelete){
+            echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Architect deleted.</div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Architect deletion failed!</div>';
+        }
+    }
+
+
+     /**
+     * send mail to architect
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function sendTrendingMail(Request $request)
+     {
+        //print_r($_POST);die();
+        // get all products from DB
+        if($request->input('architect_list')!=''){
+            $products = DB::table('product_tab')
+            ->join('brand_tab', 'product_tab.brand_id', '=', 'brand_tab.brand_id')
+            ->join('category_tab', 'product_tab.cat_id', '=', 'category_tab.cat_id')
+            ->select('*')
+            ->orderBy('product_tab.trending','DESC')
+            ->limit(6)
+            ->get();
+            if($products->isEmpty()){
+                echo '<h5 class="w3-text-red">ERROR: No products available in Trending List.</h5>';
+                die();
+            }
+            foreach ($request->input('architect_list') as $key) {
+                $contact_mail=str_replace(' ', '', $key);
+                $data = array(
+                    'products'  =>  $products,
+                    'contact_name' => $contact_mail
+                );
+                //print_r($data);
+                Mail::send('mails.architect_mailFormat', $data, function ($message)use ($contact_mail) {
+                    $message->from('impulse@bizmo-tech.com', 'Impulse World Trends ADMIN');        
+                    $message->to($contact_mail)->subject('Trending Products - Impulse World Trends');
+                }); 
+
+            }
+            echo '<h5 class="w3-text-green">Thank You! Your Mail has been send.</h5>';      
+        }
+        else{
+            echo '<h5 class="w3-text-red">Warning: Please select at least one Architect.</h5>';
+            die();
+        }
+        
+    }
 
 }

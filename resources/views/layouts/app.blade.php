@@ -26,11 +26,22 @@
     <link rel="stylesheet" href="{{ asset('template/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('template/css/colors.css') }}">
     <link rel="stylesheet" href="{{ asset('template/css/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+
+    <!-- angular-->
+    <script src="{{ asset('assets/js/angular.js') }}"></script>
+    <script src="{{ asset('assets/js/angular-sanitize.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/module/common.js') }}"></script>
+    <!-- External JavaScripts ============================================= -->
+    <script src="{{ asset('template/js/jquery.js') }}"></script>
+    
+
 </head>
 <body class="stretched"> 
     <!-- Document Wrapper
         ============================================= -->
         <div id="wrapper" class="clearfix">
+            @if(Request::url() != URL::to('/').'/adminlogin')
 
         <!-- Top Bar
             ============================================= -->
@@ -61,8 +72,8 @@
                             <ul>
                                 <li><a>Locations</a>
                                     <ul>
-                                        <li><a href="#">Pune</a></li>
-                                        <li><a href="#">Outside Pune</a></li>
+                                        <li><a href="{{URL::to('/')}}/location/set/1">Pune</a></li>
+                                        <li><a href="{{URL::to('/')}}/location/set/2">Outside Pune</a></li>
                                         <!-- <li><a href="#">Amsterdam</a></li> -->
                                     </ul>
                                 </li>
@@ -79,18 +90,17 @@
 
         <!-- Header
             ============================================= -->
-            <header id="header" class="sticky-style-2">
+            <header id="header" class="sticky-style-2" ng-app="menuApp" ng-cloak ng-controller="menuCtrl">
 
                 <div class="container clearfix">
 
                 <!-- Logo
                     ============================================= -->
-                    <div id="logo">
+                    <div id="logo" class=" w3-margin-top">
                         <a href="{{URL::to('/')}}" class="standard-logo w3-padding-top"><img src="{{URL::to('/')}}/template/images/impulse-logo.png" class="img img-responsive" style="width: 230px;height: auto" alt="Impulse Logo"></a>
                         <a href="{{URL::to('/')}}" class="retina-logo w3-margin-top"><img src="{{URL::to('/')}}/template/images/impulse-logo.png" class="img img-responsive" style="width: 240px;height: auto" alt="Impulse Logo"></a>
                     </div><!-- #logo end -->
-
-                    <ul class="header-extras">
+                    <ul class="header-extras" style="margin-bottom:24px">
                         <li>
                             <i class="i-plain icon-call nomargin"></i>
                             <div class="he-text">
@@ -128,7 +138,7 @@
 
                             <ul>
                                 <li class="current"><a href="{{URL::to('/')}}"><div>Home</div></a></li>
-                                <li><a><div>Company</div></a>
+                                <li><a href="#"><div>Company</div></a>
                                     <ul>
                                         <li><a href="{{URL::to('/')}}/contact-us"><div>Contact Us</div></a></li>
                                         <li><a href="{{URL::to('/')}}/career"><div>Careers</div></a></li>
@@ -138,58 +148,79 @@
                                     <div class="mega-menu-content style-2 clearfix">
                                         <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12">
                                             <li class="mega-menu-title"><a href="#"><div>By Category</div></a>
-                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" style="padding-top:0px;border-left:none;">
-                                                    <li><a href="portfolio-1.html"><div>C. P. Fitting</div></a></li>
-                                                    <li><a href="portfolio-2.html"><div>Sanitary ware</div></a></li>
-                                                    <li><a href="portfolio-3.html"><div>Pex</div></a></li>
-                                                    <li><a href="portfolio.html"><div>Tece</div></a></li>
-                                                    <li><a href="portfolio-5.html"><div>Tiles</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Roofing Tiles</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Kerakoll</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Wooden Floor</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Windows</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Kitchen</div></a></li>
-                                                </ul>
-                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" style="padding-top:0px">
-                                                    <li><a href="portfolio-6.html"><div>Appliances</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Wardrobe</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Hunter Douglas</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Dorma</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>TCS</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Railing</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Thermory</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Forms &amp; Surfaces</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Accessories</div></a></li>
+                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" id="catMenu2" style="padding-top:0px;border-left:none;">
+                                                    <?php 
+                                                    $countCat=count($all_categories);
+                                                    $rowCount=0;
 
+                                                    foreach ($all_categories as $cat)
+                                                    {
+                                                        ?>                                                   
+                                                        <li><a href="{{URL::to('/')}}/category/info/<?php echo base64_encode($cat->cat_id); ?>"><div><?php echo $cat->category_name; ?></div></a></li>
+                                                        <?php 
+                                                        $rowCount++;
+                                                        if($rowCount==10){
+                                                            break;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </ul>
+                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" ng-show="false" id="catMenu2" style="padding-top:0px">
+                                                    <?php 
+                                                    $countCat=count($all_categories);
+                                                    $secRow=0;
+
+                                                    for($i=$rowCount;$i<$countCat;$i++)
+                                                    {
+                                                        ?>                                                   
+                                                        <li><a href="{{URL::to('/')}}/category/info/<?php echo base64_encode($all_categories[$i]->cat_id); ?>"><div><?php echo $all_categories[$i]->category_name; ?></div></a></li>
+                                                        <?php 
+                                                        $secRow++;
+                                                        if($secRow==10){
+                                                       
+                                                        break;
+                                                        }
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </li>
                                         </ul>
                                         <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12">
                                             <li class="mega-menu-title"><a href="#"><div>By Brand</div></a>
-                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" style="padding-top:0px;border-left:none;">
-                                                    <li><a href="portfolio-1.html"><div>Grohe</div></a></li>
-                                                    <li><a href="portfolio-2.html"><div>Toto</div></a></li>
-                                                    <li><a href="portfolio-3.html"><div>Delta</div></a></li>
-                                                    <li><a href="portfolio.html"><div>Brizo</div></a></li>
-                                                    <li><a href="portfolio-5.html"><div>Smartpool</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Amoro</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Catalano</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Tender Rain</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Tece</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Inda</div></a></li>
-                                                </ul>
-                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" style="padding-top:0px">
-                                                    <li><a href="portfolio-6.html"><div>Giacomini</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Laminam</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Versace</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Marca Corona</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Johnson</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Nobilia</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Siemens</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Blanco</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Rauch</div></a></li>
-                                                    <li><a href="portfolio-6.html"><div>Others</div></a></li>
+                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" id="brandMenu1" style="padding-top:0px;border-left:none;">
+                                                    <?php 
+                                                    $countBrand=count($all_brands);
+                                                    $rowCountBr=0;
 
+                                                    foreach ($all_brands as $br)
+                                                    {
+                                                        ?>                                                   
+                                                        <li><a href="{{URL::to('/')}}/brands/info/<?php echo base64_encode($br->brand_id); ?>"><div><?php echo $br->brand_name; ?></div></a></li>
+                                                        <?php 
+                                                        $rowCountBr++;
+                                                        if($rowCountBr==10){
+                                                            break;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </ul>
+                                                <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12" id="brandMenu2" style="padding-top:0px">
+                                                    <?php 
+                                                    $countBrand=count($all_brands);
+                                                    $secRowBr=0;
+
+                                                    for($i=$rowCountBr;$i<$countBrand;$i++)
+                                                    {
+                                                        ?>                                                   
+                                                        <li><a href="{{URL::to('/')}}/brands/info/<?php echo base64_encode($all_brands[$i]->brand_id); ?>"><div><?php echo $all_brands[$i]->brand_name; ?></div></a></li>
+                                                        <?php 
+                                                        $secRowBr++;
+                                                        if($secRowBr==9){
+                                                        echo '<li><a href="'.URL::to('/').'/brands"><div>Others</div></a></li>';
+                                                        break;
+                                                        }
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -204,12 +235,12 @@
 
                         <!-- Top Search
                             ============================================= -->
-                            <div id="top-search">
+                            <!-- <div id="top-search">
                                 <a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
                                 <form action="search.html" method="get">
                                     <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter..">
                                 </form>
-                            </div><!-- #top-search end -->
+                            </div> --><!-- #top-search end -->
 
                         </div>
 
@@ -217,8 +248,10 @@
 
                 </div>
 
-            </header><!-- #header end -->      
+            </header><!-- #header end -->   
+            @endif   
             @yield('content')
+            @if(Request::url() != URL::to('/').'/adminlogin')  
     <!-- Footer
         ============================================= -->
         <footer id="footer" class="dark">
@@ -239,22 +272,30 @@
 
                                 <div class="line" style="margin: 30px 0;"></div>
                                 <div class="w3-col l6">
+                                    <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
+                                            <i class="icon-facebook"></i>
+                                            <i class="icon-facebook"></i>
+                                        </a>
+                                        <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
+                                <!-- 
                                     <div class="widget subscribe-widget clearfix">
-                            <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
-                            <div class="widget-subscribe-form-result"></div>
-                            <form id="widget-subscribe-form" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
-                                <div class="input-group divcenter">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text"><i class="icon-email2"></i></div>
+                                        <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
+                                        <div class="widget-subscribe-form-result"></div>
+                                        <form id="widget-subscribe-form" class="nobottommargin" action="/get-connect/subscribeEmail" method="POST">
+                                            <div class="input-group divcenter">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class="icon-email2"></i></div>
+                                                </div>
+                                                <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email" required>
+                                                <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" id="subscribeButton" type="submit">Subscribe</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div id="formOutput"></div>
                                     </div>
-                                    <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-success" type="submit">Subscribe</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                                </div>
+                                 --></div>
                             </div>
 
                         </div>
@@ -266,7 +307,7 @@
                                     <div class="col-lg-12 bottommargin-sm">
                                         <div class="footer-big-contacts">
                                             <span>Call Us:</span>
-                                            (91) 22 55412474
+                                            (91) 84110 09080
                                         </div>
                                     </div>
 
@@ -280,27 +321,16 @@
                                 </div>
 
                             </div>
-
+<!-- 
                             <div class="widget subscribe-widget clearfix">
                                 <div class="row">
 
                                     <div class="col-lg-6 clearfix bottommargin-sm">
-                                        <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
-                                            <i class="icon-facebook"></i>
-                                            <i class="icon-facebook"></i>
-                                        </a>
-                                        <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
-                                    </div>
-                                    <div class="col-lg-6 clearfix">
-                                        <a href="#" class="social-icon si-dark si-colored si-rss nobottommargin" style="margin-right: 10px;">
-                                            <i class="icon-rss"></i>
-                                            <i class="icon-rss"></i>
-                                        </a>
-                                        <a href="#"><small style="display: block; margin-top: 3px;"><strong>Subscribe</strong><br>to RSS Feeds</small></a>
+                                        
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -336,19 +366,15 @@
                 </div><!-- #copyrights end -->
 
             </footer><!-- #footer end -->
-
+            @endif
         </div><!-- #wrapper end -->
 
     <!-- Go To Top
         ============================================= -->
         <div id="gotoTop" class="icon-angle-up"></div>
     </body>
-<!-- External JavaScripts
-    ============================================= -->
-    <script src="{{ asset('template/js/jquery.js') }}"></script>
-    <script src="{{ asset('template/js/plugins.js') }}"></script>
+<script src="{{ asset('template/js/plugins.js') }}"></script>
 
-    <!-- Footer Scripts
-    ============================================= -->
-    <script src="{{ asset('template/js/functions.js') }}"></script>
-        </html>
+<!-- Footer Scripts============================================= -->
+<script src="{{ asset('template/js/functions.js') }}"></script>
+</html>

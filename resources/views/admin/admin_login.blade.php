@@ -14,13 +14,13 @@
 
                 <div class="content-wrap nopadding">
 
-                    <div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url('template/images/admin/1.jpg') center center no-repeat; background-size: cover;"></div>
+                    <div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url('template/images/admin/login-bg1.jpg') center center no-repeat; background-size: cover;"></div>
 
                     <div class="section nobg full-screen nopadding nomargin">
                         <div class="container-fluid vertical-middle divcenter clearfix">
 
                             <div class="center w3-margin">
-                                <a href="index.html"><img src="template/images/impulse-logo.png" class="img img-responsive" alt="Impulse Logo" style="width: 240px;height: auto"></a>
+                                <a href="index.html"><img src="template/images/impulse-logo.png" class="img img-responsive w3-white w3-opacity w3-padding" alt="Impulse Logo" style="width: 240px;height: auto"></a>
                             </div>
 
                             <div class="card divcenter noradius noborder" style="max-width: 400px; background-color: rgba(255,255,255,0.93);">
@@ -58,13 +58,13 @@
 
                                         <div class="col_full nobottommargin">
                                             <button class="button button-3d button-black nomargin" id="login-form-submit" name="login-form-submit" type="submit" value="login">Login</button>
-                                            <a href="{{URL::to('/forgot_password')}}" class="fright">Forgot Password?</a>
+                                            <!-- <a href="{{URL::to('/forgot_password')}}" class="fright">Forgot Password?</a> -->
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
-                            <div class="center dark"><small>Copyrights &copy; All Rights Reserved by Canvas Inc.</small></div>
+                            <div class="center dark"><small>Copyrights &copy; All Rights Reserved by <a class="w3-text-white w3-hover-text-orange" href="{{URL::to('/')}}" target="_blank">Impulse World Trends.</a> </small></div>
 
                         </div>
                     </div>

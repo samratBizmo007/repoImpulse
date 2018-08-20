@@ -94,13 +94,13 @@ var SEMICOLON = SEMICOLON || {};
 			SEMICOLON.initialize.responsiveClasses();
 			SEMICOLON.initialize.stickyElements();
 			SEMICOLON.initialize.goToTop();
-			SEMICOLON.initialize.lazyLoad();
+			// SEMICOLON.initialize.lazyLoad();
 			SEMICOLON.initialize.fullScreen();
 			SEMICOLON.initialize.verticalMiddle();
 			SEMICOLON.initialize.lightbox();
 			SEMICOLON.initialize.resizeVideos();
 			SEMICOLON.initialize.imageFade();
-			SEMICOLON.initialize.pageTransition();
+			// SEMICOLON.initialize.pageTransition();
 			SEMICOLON.initialize.dataResponsiveClasses();
 			SEMICOLON.initialize.dataResponsiveHeights();
 			SEMICOLON.initialize.stickFooterOnSmall();
@@ -676,7 +676,7 @@ var SEMICOLON = SEMICOLON || {};
 					var element = $(this),
 						elementImg = element.attr( 'data-lazyload' );
 
-					element.attr( 'src', 'images/blank.svg' ).css({ 'background': 'url(images/preloader.gif) no-repeat center center #FFF' });
+					element.attr( 'src', 'images/blank.svg' ).css({ 'background': 'url(templates/images/preloader@2x.gif) no-repeat center center #FFF' });
 
 					element.appear(function () {
 						element.css({ 'background': 'none' }).removeAttr( 'width' ).removeAttr( 'height' ).attr('src', elementImg);

@@ -54,18 +54,14 @@
                                         <li><a href="admin/products/allproduct">View All Products</a></li>
                                     </ul> -->
                                 </li>
-                                <!-- <li><a href="/admin/project"><i class="fa fa-list"></i> Project Section </a> -->
-                                <li><a href="#"><i class="fa fa-list"></i> Project Section </a>
+                                <li><a href="/admin/project"><i class="fa fa-list"></i> Project Section </a>
                                     <!-- <ul class="nav child_menu">
                                         <li><a href="inventory/showinventory">View Inventory</a></li>
                                     </ul> -->
                                 </li>
                                 <li><a href="/admin/services"><i class="fa fa-sliders"></i> Service Section </a>
                                 </li>
-                                <li><a href="#"><i class="fa fa-user"></i> Career Section </a>
-                                <!-- <li><a href="/admin/career"><i class="fa fa-user"></i> Career Section </a> -->
-
-                                </li>
+                                <li><a href="/admin/careers"><i class="fa fa-users"></i> Career Section </a></li>
                             </ul>
                         </div>
                         <div class="menu_section"><!-- 
@@ -116,16 +112,16 @@
 
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                        <a data-toggle="tooltip" style="width: 50%" href="/admin/general-settings" data-placement="top" title="General Settings">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                       <!--  <a data-toggle="tooltip" data-placement="top" title="FullScreen">
                             <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                         </a>
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login/logoutAdmin">
+                        </a> -->
+                        <a data-toggle="tooltip" style="width: 50%" data-placement="top" title="Logout" href="/logout/clearsession">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -148,14 +144,8 @@
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="#"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li><a href="/admin/general-settings"><i class="fa fa-cogs pull-right"></i> Settings</a></li>
+                                    <li><a href="/logout/clearsession"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
                             </li>
 

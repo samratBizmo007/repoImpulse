@@ -27,109 +27,29 @@
 
             <div id="portfolio" class="portfolio grid-container clearfix">
 
+                @if($trending_prods!='')
+                @foreach($trending_prods as $prod)
+                <?php 
+                $img_arr=json_decode($prod->prod_image,TRUE);
+                ?>
+                <!-- Product div -->
                 <article class="portfolio-item pf-media pf-icons">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/1.jpg" alt="The Atmosphere">
+                    <div class="portfolio-image" >
+                        <img src="{{URL::to('/')}}/{{$img_arr[0]}}" style="height: 200px" alt="{{$prod->prod_name}} Image">
                         <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
+                            <a href="{{URL::to('/')}}/products/info/<?php echo base64_encode($prod->product_id); ?>" class="center-icon"><i class="icon-line-ellipsis"></i></a>
                         </div>
                     </div>
                     <div class="portfolio-desc">
-                        <h3><a href="#">The Atmosphere</a></h3>
-                        <span>Chicago, USA</span>
+                        <h3><a href="{{URL::to('/')}}/products/info/<?php echo base64_encode($prod->product_id); ?>">{{$prod->prod_name}}</a></h3>
                     </div>
                 </article>
-
-                <article class="portfolio-item pf-illustrations">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/2.jpg" alt="Wavelength Structure">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Wavelength Structure</h3>
-                        <span>Madrid, Spain</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-graphics pf-uielements">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/3.jpg" alt="Greenhouse Garden">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Greenhouse Garden</h3>
-                        <span>Bali, Indonesia</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-icons pf-illustrations">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/4.jpg" alt="Industrial Hub">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Industrial Hub</h3>
-                        <span>Beijing, China</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-uielements pf-media">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/5.jpg" alt="Corporate Headquarters">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Corporate Headquarters</h3>
-                        <span>California, USA</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-graphics pf-illustrations">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/6.jpg" alt="Space Station">
-                        <div class="portfolio-overlay" data-lightbox="gallery">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Space Station</h3>
-                        <span>Moscow, Russia</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-uielements pf-icons">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/7.jpg" alt="Bent Architecture">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Bent Architecture</h3>
-                        <span>Melbourne, Australia</span>
-                    </div>
-                </article>
-
-                <article class="portfolio-item pf-graphics">
-                    <div class="portfolio-image">
-                        <img src="template/images/projects/8.jpg" alt="Lakeview Center">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="center-icon"><i class="icon-line-ellipsis"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-desc">
-                        <h3>Lakeview Center</h3>
-                        <span>Auckland, New Zealand</span>
-                    </div>
-                </article>
+                @endforeach
+                @else
+                <div class="w3-col l12 w3-center w3-padding">
+                    <h4>No Product Available</h4>
+                </div>
+                @endif
 
             </div>
 

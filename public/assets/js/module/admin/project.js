@@ -250,32 +250,55 @@ function readVideo(input,id) {
 // }
 // ------------------END UPDATE---------------------//
 
+// ----function to open modal product------//
+function openModal(id) {
 
+}
+// ----function to open modal product------//
+function openHelp(modal_id) {
+  var modal=$('#'+modal_id);
+  modal.addClass('in');
+}
 
 // Angular js for all project view
 var app = angular.module("projApp", ['ngSanitize']); 
 app.controller("ProjCtrl", function($scope,$http,$window) {
 
-// get all projects in table box
-  $scope.getProject= function(){
-    $scope.dataTab=false;
-    $scope.emptyTab=false;
-    $http({
-      method: 'get',
-      url:'project/getAllProjects'
-    }).then(function successCallback(response) {
-      // Assign response to services object
-      
-      if(response.data==''){
-        $scope.emptyTab=true;
-      }
-      else{
-        $scope.dataTab=true;
-        $scope.allprojects = response.data;
-      }
-  }); 
+// show/hide project modal
+$scope.viewProj=true;
+$scope.editProj=false;
+$scope.projectAction=function(val){
+  if (val) {
+    $scope.viewProj=true;
+    $scope.editProj=false;
   }
-  $scope.getProject()
+  else{
+    $scope.viewProj=false;
+    $scope.editProj=true;
+  }
+}
+
+
+// get project details
+$scope.viewProject=function(project_id){
+  $scope.relatedProdsSpinner="<span class='w3-text-grey'><i class='fa fa-circle-o-notch fa-spin'></i> Loading products. Please wait... </span>"
+  $http({
+   method: 'get',
+   url: 'project/getProject',
+   params: {project_id: project_id},
+ }).then(function successCallback(response) {
+  $scope.relatedProdsSpinner='';
+   $scope.relatedProds = response.data;
+ }); 
+}
+
+
+$scope.openModal=function (id){
+  var modal=$('#ProjModal_'+id);
+  modal.addClass('in');
+  $scope.viewProject(id);
+  $scope.productAddMessage='';
+}
 
 // remove product from db
 $scope.removeProject = function (project_id) {
@@ -295,10 +318,9 @@ $scope.removeProject = function (project_id) {
           $(".alert").fadeTo(500, 0).slideUp(500, function(){
             $(this).remove(); 
           });
-          //location.reload();
-        }, 3000);
+          location.reload();
+        }, 1000);
 
-        $scope.getProject()
       }); 
      },
      cancel: function () {
@@ -307,37 +329,57 @@ $scope.removeProject = function (project_id) {
  });
 }
 
-
-// get project details
-$scope.viewProject=function(project_id){
-  $http({
+// remove product from project assocaition db
+$scope.removeAssoc = function (product_id,project_id) {
+  $.confirm({
+    title: '<h4 class="w3-text-red">Please confirm the action!</h4><span class="w3-medium">Do you really want to remove this product?</span>',
+    content: '',
+    type: 'red',
+    buttons: {
+      confirm: function () {
+       $http({
          method: 'get',
-         url: 'project/getProject',
-         params: {project_id: project_id},
+         url: 'project/delProductAssoc',
+         params: {project_id: project_id,product_id:product_id},
        }).then(function successCallback(response) {
-       // alert(response.data);
-         $scope.delMessage = response.data;
-        // $window.setTimeout(function() {
-        //   $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        //     $(this).remove(); 
-        //   });
-        //   location.reload();
-        // }, 2000);
-
-        // $scope.getServices();
+        $scope.productAddMessage = response.data;
+        $scope.viewProject(project_id)
       }); 
+     },
+     cancel: function () {
+     }
+   }
+ });
 }
 
+$scope.add_assoc_field=[];
+// add product to project
+$scope.addAssoc = function (project_id) {
+  $scope.productAddMessage='';
+  var product_id=$scope.add_assoc_field[project_id];
+  if(product_id=='undefined' || product_id=='0' || product_id==''){
+    $scope.productAddMessage='<span class="w3-text-red"><i class="fa fa-warning"></i> Please select appropriate product!</span>';
+    return false;
+  }
+  $http({
+   method: 'get',
+   url: 'project/addProductAssoc',
+   params: {project_id: project_id,product_id:product_id},
+ }).then(function successCallback(response) {
+  $scope.productAddMessage = response.data;
+  $scope.viewProject(project_id)
+  });
+}
 
 // add new product
 $("#addProjectForm").on('submit', function(e) {
  e.preventDefault();
-$.ajaxSetup({
+ $.ajaxSetup({
   headers: {
     'X-CSRF-Token': $('#_token').val()
   }
 });
-$.ajax({
+ $.ajax({
     url: "project/addProject", // point to server-side PHP script
     data: new FormData(this),
     type: 'POST',
@@ -350,13 +392,12 @@ $.ajax({
     success: function(data){
       $('#formOutput').html(data);
       $('#btnsubmit').html('<button type="submit" title="Add new project" id="submitForm" class="btn w3-red">Save and Add Project</button>');
-
       window.setTimeout(function() {
        $(".alert").fadeTo(500, 0).slideUp(500, function(){
          $(this).remove(); 
        });
        location.reload();
-     }, 2000);
+     }, 1500);
     },
     error:function(data){
      $('#formOutput').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');

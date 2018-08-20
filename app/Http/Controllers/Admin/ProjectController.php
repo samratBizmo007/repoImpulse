@@ -38,40 +38,32 @@ class ProjectController extends Controller
 
 
     /**
-     * get projects into DB.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAllProjects()
-    {
-        
-        // get all projects
-        $projects = DB::select('select * from project_tab order by project_id DESC');
-        echo json_encode($projects);
-    }
-
-
-    /**
      * get project details by id.
      *
      * @return \Illuminate\Http\Response
      */
     public function getProject(Request $request)
     {
-       // print_r($request->input('project_id'));die();
-        // get details products from DB
         // get related projects from DB
         $projects = DB::table('prod_proj_assoc_tab')
         ->join('product_tab', 'product_tab.product_id', '=', 'prod_proj_assoc_tab.product_id')
         ->join('project_tab', 'project_tab.project_id', '=', 'prod_proj_assoc_tab.project_id')
-        ->select('*')
+        ->select('product_tab.product_id','product_tab.prod_name')
         ->where('project_tab.project_id', '=', $request->input('project_id'))
         ->get();
         if($projects->isEmpty()){
             $projects='';   //if not found
         }
         //$projects = DB::select('select * from project_tab where project_id=?',[$request->input('project_id')]);
-        print_r($projects);
+        //print_r($projects);die();
+        if($projects!=''){
+            echo json_encode($projects);die();
+            
+        }
+        else{
+            echo '';
+        }
+        //echo json_encode($projects);
     }
     
     /**
@@ -86,6 +78,7 @@ class ProjectController extends Controller
         $vid_json='';
         $ongoing='0';
         $end_date=$request->input('end_date');
+        $start_date=$request->input('start_date');
  //
         if($request->input('ongoingcheck')!=''){
             $ongoing='1';
@@ -94,7 +87,11 @@ class ProjectController extends Controller
         if($request->input('end_date')==''){
             $end_date='0000-00-00';
         }
-
+        if($request->input('start_date')==''){
+            $start_date='0000-00-00';
+            $end_date='0000-00-00';
+        }
+//echo $start_date;die();
         // image uploading code
         if($request->hasfile('proj_image'))
         {
@@ -108,7 +105,7 @@ class ProjectController extends Controller
             }
             $image_json=json_encode($img_arr);
         }
-
+//echo $image_json;die();
         
           // video link uploading code
         if($request->has('proj_video') && is_array($request->proj_video) && count($request->proj_video))
@@ -119,10 +116,10 @@ class ProjectController extends Controller
             }
             $vid_json=json_encode($vid_arr);
         }
-         //print_r($file_json);die();
+         //print_r($vid_json);die();
         
         // insert category name into  db
-        $checkInsert = DB::insert('insert into project_tab (proj_name,proj_description,proj_images,proj_videos,start_date,end_date,ongoing,client_name,status) values(?,?,?,?,?,?,?,?,?)', [$request->input('project_name'),$request->input('project_description'),$image_json,$vid_json,$request->input('start_date'),$end_date,$ongoing,$request->input('client_name'),0]);
+        $checkInsert = DB::insert('insert into project_tab (proj_name,proj_description,proj_images,proj_videos,start_date,end_date,ongoing,client_name,status) values(?,?,?,?,?,?,?,?,?)', [$request->input('project_name'),$request->input('project_description'),$image_json,$vid_json,$start_date,$end_date,$ongoing,$request->input('client_name'),0]);
         //print_r($_POST);die();
 
         if($checkInsert){
@@ -131,6 +128,58 @@ class ProjectController extends Controller
         else{
             echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Project was not added!</div>';
         }
+    }
+
+
+    /**
+     * Insert product in project into DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addProductAssoc(Request $request)
+    {       
+        if($request->input('product_id')=='undefined' || $request->input('product_id')=='0' || $request->input('product_id')==''){
+            echo '<span class="w3-text-red"><i class="fa fa-warning"></i> Please select appropriate product!</span>';
+            die();
+        }
+        // check db 
+        $checkProductExist = DB::select('select * from prod_proj_assoc_tab where project_id=? and product_id=?',[$request->input('project_id'),$request->input('product_id')]); 
+
+        if($checkProductExist){
+            echo '<span class="w3-text-red"><i class="fa fa-warning"></i> Product already associated! Choose other.</span>';
+        } 
+        else{
+            // associate prodcut to project
+        $checkInsert = DB::insert('insert into prod_proj_assoc_tab (project_id,product_id) values(?,?)', [$request->input('project_id'),$request->input('product_id')]);
+        //print_r($_POST);die();
+
+        if($checkInsert){
+           echo '<span class="w3-text-green"><i class="fa fa-check"></i> Product added to Project.</span>';
+        }
+        else{
+            echo '<span class="w3-text-red"><i class="fa fa-warning"></i> Product was not added to Project.</span>';
+        }
+        }  
+        
+    }
+
+    /**
+     * delete product in project into DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delProductAssoc(Request $request)
+    {       
+        //print_r($_GET);die();
+        // check db 
+        $checkDelete = DB::delete('delete from prod_proj_assoc_tab where project_id=? and product_id=?',[$request->input('project_id'),$request->input('product_id')]); 
+
+        if($checkDelete){
+            echo '';
+        } 
+        else{            
+            echo '<span class="w3-text-red"><i class="fa fa-warning"></i> Product was not deleted.</span>';
+        }        
     }
 
     /**
@@ -160,14 +209,31 @@ class ProjectController extends Controller
      */
     public function updateChanges(Request $request)
     {      
+        //print_r($_POST);die();
+        $ongoing='0';
+        $end_date=$request->input('update_end_date');
+        $start_date=$request->input('update_start_date');
+ //
+        if($request->input('update_ongoingcheck')!=''){
+            $ongoing='1';
+        }
+
+        if($request->input('update_end_date')==''){
+            $end_date='0000-00-00';
+        }
+        if($request->input('update_start_date')==''){
+            $start_date='0000-00-00';
+            $end_date='0000-00-00';
+        }
+        //print_r($start_date);die();
         // update product details  db
-        $checkUpdate = DB::update('update product_tab set brand_id = ?,cat_id=?,prod_name=?,prod_description=?,prod_image=?,prod_video=?,prod_files=? where product_id=?', [$request->input('update_product_brand'),$request->input('update_product_category'),$request->input('update_product_name'),$request->input('update_product_description'),$request->input('originalImages'),$request->input('originalVids'),$request->input('originalFiles'),$request->input('id')]);
+        $checkUpdate = DB::update('update project_tab set proj_name = ?,proj_description=?,proj_images=?,proj_videos=?,start_date=?,end_date=?,ongoing=?,client_name=? where project_id=?', [$request->input('update_project_name'),$request->input('update_project_description'),$request->input('update_image_json'),$request->input('update_vid_json'),$start_date,$end_date,$ongoing,$request->input('update_client_name'),$request->input('id')]);
         
         if($checkUpdate){
             echo '<div class="alert alert-success alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Product updated successfully.</div>';
         }
         else{
-            echo '<div class="alert alert-warning alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> You havent changed anything! Product not updated</div>';
+            echo '<div class="alert alert-warning alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> You havent changed anything! Project not updated</div>';
         }
     }
 

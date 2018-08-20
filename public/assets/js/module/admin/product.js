@@ -23,10 +23,12 @@ $(document).ready(function () {
         <img src="" width="auto" id="prodImagePreview_'+x+'" height="150px" alt="Product Image will be displayed here once chosen." class=" w3-centerimg img-thumbnail">\n\
         </div>\n\
         </div>\n\
-              </div>'); //add input box
-    } else {
-                    $.alert('<label class="w3-label w3-text-red"><i class="fa fa-warning w3-xxlarge"></i> You Reached the maximum limit of adding ' + max_fields + ' fields</label>');   //alert when added more than 4 input fields
-                  }
+        </div>'); //add input box
+    } 
+    else 
+    {
+      $.alert('<label class="w3-label w3-text-red"><i class="fa fa-warning w3-xxlarge"></i> You Reached the maximum limit of adding ' + max_fields + ' fields</label>');   //alert when added more than 4 input fields
+    }
                 });
   $(wrapper).on("click", ".delete", function (e) {
     e.preventDefault();
@@ -289,6 +291,12 @@ function openModal(id) {
   modal.addClass('in');
 }
 
+// ----function to open modal product------//
+function openHelp(modal_id) {
+  var modal=$('#'+modal_id);
+  modal.addClass('in');
+}
+
 
 // Angular js for all product view
 var app = angular.module("prodApp", ['ngSanitize']); 
@@ -313,7 +321,7 @@ $scope.removeProduct = function (product_id) {
             $(this).remove(); 
           });
           location.reload();
-        }, 2000);
+        }, 1500);
 
         // $scope.getServices();
       }); 
@@ -348,14 +356,41 @@ $("#addProduct_form").on('submit', function(e) {
  e.preventDefault(); 
  var cat=$('#product_category').val();
  var brand=$('#product_brand').val();
+ var location=$('#product_location').val();
+
+ $('#cat_error').html('');
+ $('#brand_error').html('');
+ $('#location_error').html('');
 
  if(cat==0){
   $('#cat_error').html('  ERROR: Please select Product Category. ');
-  return false;
+  if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
+    $("html,body").animate({scrollTop:0},"slow");
+    document.scrollingElement.scrollTop;
+  } else {
+   $("html,body").animate({scrollTop:0},"slow");
+ }
+ return false;
 }
 if(brand==0){
   $('#brand_error').html('  ERROR: Please select Product Brand. ');
-  return false;
+  if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
+    $("html,body").animate({scrollTop:0},"slow");
+    document.scrollingElement.scrollTop;
+  } else {
+   $("html,body").animate({scrollTop:0},"slow");
+ }
+ return false;
+}
+if(location==0){
+  $('#location_error').html('  ERROR: Please select Location. ');
+  if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
+    $("html,body").animate({scrollTop:0},"slow");
+    document.scrollingElement.scrollTop;
+  } else {
+   $("html,body").animate({scrollTop:0},"slow");
+ }
+ return false;
 }
 
 dataString = $("#addProduct_form").serialize();
@@ -376,18 +411,18 @@ $.ajax({
     },
     success: function(data){
       $('#formOutput').html(data);
-      $('#btnsubmit').html('<button type="submit" title="Add new product" id="submitForm" class="btn w3-red">Save and Add Product</button>');
+      $('#btnsubmit').html('<button type="submit" title="Add new product" id="submitForm" class="btn theme_bg">Save and Add Product</button>');
 
       window.setTimeout(function() {
        $(".alert").fadeTo(500, 0).slideUp(500, function(){
          $(this).remove(); 
        });
-       location.reload();
-     }, 3000);
+       window.location.reload();
+     }, 1000);
     },
     error:function(data){
      $('#formOutput').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');
-     $('#btnsubmit').html('<button type="submit" title="Add new product" id="submitForm" class="btn w3-red">Save and Add Product</button>');
+     $('#btnsubmit').html('<button type="submit" title="Add new product" id="submitForm" class="btn theme_bg">Save and Add Product</button>');
      window.setTimeout(function() {
        $(".alert").fadeTo(500, 0).slideUp(500, function(){
          $(this).remove(); 

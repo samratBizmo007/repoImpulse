@@ -11,7 +11,7 @@
             <h1>Careers</h1>
             <span>Join our Fabulous Team of Intelligent Individuals</span>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Careers</li>
             </ol>
         </div>

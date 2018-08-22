@@ -9,7 +9,7 @@
         <h1>Trends</h1>
         <span>A Short Page Title Tagline</span>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Trends</li>
         </ol>
     </div>

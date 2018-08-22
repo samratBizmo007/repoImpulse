@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $categories = DB::select('select * from category_tab order by cat_id DESC');
 
         // get all brands from DB
-        $brands = DB::select('select * from brand_tab order by brand_id DESC');
+        $brands = DB::select('select * from brand_tab order by status');
 
         // get all architects from DB
         $arch = DB::select('select * from architect_tab order by arch_id DESC');
@@ -244,6 +244,82 @@ class DashboardController extends Controller
             die();
         }
         
+    }
+
+    /**
+     * mark feature brand into DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function markBrand(Request $request)
+    {      
+        $bid=$request->segment(2);
+
+        $featureCount = DB::table('brand_tab')
+        ->where('status', '0')
+        ->count();
+        //print_r($users);die();
+
+        if($featureCount>=6){
+            $stat=array(
+                'status'    =>false,
+                'message'   =>'<span class="w3-text-red w3-medium"><i class="fa fa-warning"></i> WARNING! Only 6 Brands are allowed to be marked as Featured Brand.</span>'
+            );
+            return $stat;
+        }
+        else{
+          // mark product trending  db 
+            $checkUpdate =DB::table('brand_tab')
+            ->where('brand_id', $bid)
+            ->update(['status' => '0']);
+
+            if($checkUpdate){
+                $stat=array(
+                    'status'    =>true,
+                    'message'   =>'<span class="w3-text-red w3-medium"><strong>Success-</strong> Brand updated.</span>'
+                );
+                return $stat;
+            }
+            else{
+                $stat=array(
+                    'status'    =>false,
+                    'message'   =>'<span class="w3-text-red w3-medium"><strong>Failure!</strong> Brand updation failed!</span>'
+                );
+                return $stat;
+            }  
+        }
+        
+    }
+
+    /**
+     * unmark feature brand into DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unmarkBrand(Request $request)
+    {      
+        $bid=$request->segment(2);
+
+        // mark product trending  db 
+        $checkUpdate =DB::table('brand_tab')
+        ->where('brand_id', $bid)
+        ->update(['status' => '1']);
+
+
+        if($checkUpdate){
+            $stat=array(
+                'status'    =>true,
+                'message'   =>'<span class="w3-text-red w3-medium"><strong>Success-</strong> Brand updated.</span>'
+            );
+            return $stat;
+        }
+        else{
+            $stat=array(
+                'status'    =>false,
+                'message'   =>'<span class="w3-text-red w3-medium"><strong>Failure!</strong> Brand updation failed!</span>'
+            );
+            return $stat;
+        }
     }
 
 }

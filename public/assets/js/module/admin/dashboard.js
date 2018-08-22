@@ -158,6 +158,47 @@ $scope.removeArch = function (arch_id) {
  });
 }
 
+// remove architect from db
+$scope.featureBrand = function (brand_id,status) {
+  var URL='/markBrand/'+brand_id;
+  var title='<h4 class="theme_text">Mark the brand as Featured Brand?</h4>';
+
+  if (status==0) {
+  var URL='/unmarkBrand/'+brand_id;
+  var title='<h4 class="theme_text">Unmark as Featured Brand?</h4>';
+  }
+  $.confirm({
+    title: title,
+    content: '',
+    type: 'blue',
+    buttons: {
+      confirm: function () {
+       $http({
+         method: 'get',
+         url: URL,
+         //params: {product_id: product_id},
+       }).then(function successCallback(response) {
+        //console.log(response.data.status);
+        if(response.data.status==false){
+          $.alert(response.data.message);
+        }
+        else{
+          $window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+          });
+          location.reload();
+        }, 10);
+        }
+        // $scope.getServices();
+      }); 
+     },
+     cancel: function () {
+     }
+   }
+ });
+}
+
 // add new product
 $("#addCategoryForm").on('submit', function(e) {
  e.preventDefault(); 

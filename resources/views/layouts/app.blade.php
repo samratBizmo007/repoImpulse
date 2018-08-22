@@ -35,7 +35,27 @@
     <!-- External JavaScripts ============================================= -->
     <script src="{{ asset('template/js/jquery.js') }}"></script>
     
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+        url: "https://geoip-db.com/jsonp",
+        jsonpCallback: "callback",
+        dataType: "jsonp",
+        success: function( location ) {
+            // $('#country').html(location.country_name);
+            // $('#state').html(location.state);
+            $('#curr_location').html('<a>'+location.city+'</a>');
+            $('#curr_location_text').val(location.city);
+            $.cookie('Location', location.city, { expires: 30});
 
+            // $('#latitude').html(location.latitude);
+            // $('#longitude').html(location.longitude);
+            // $('#ip').html(location.IPv4);  
+        }
+    }); 
+        });
+     
+    </script>
 </head>
 <body class="stretched"> 
     <!-- Document Wrapper
@@ -70,13 +90,14 @@
                         ============================================= -->
                         <div class="top-links">
                             <ul>
-                                <li><a>Locations</a>
+                                <li id="curr_location"><a>Locations</a>
                                     <ul>
                                         <li><a href="{{URL::to('/')}}/location/set/1">Pune</a></li>
                                         <li><a href="{{URL::to('/')}}/location/set/2">Outside Pune</a></li>
                                         <!-- <li><a href="#">Amsterdam</a></li> -->
                                     </ul>
                                 </li>
+                                <input type="hidden" name="curr_location_text" id="curr_location_text">
                                 <!-- <li><a href="faqs.html">FAQs</a></li> -->
                                 <li><a href="{{URL::to('/')}}/contact-us">Contact</a></li>
                             </ul>

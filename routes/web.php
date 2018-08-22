@@ -17,9 +17,6 @@
 
 //Auth::routes();
 Route::get('get-location-from-ip',function(){
-    // $ip= \Request::ip();
-    // $data = Location::get($ip);
-    // dd($data);
     $ip= Request::ip();
     $position = Location::get('192.168.43.1');
     print_r($position);
@@ -60,6 +57,8 @@ Route::post('/addArch', 'Admin\DashboardController@addArch')->middleware('userse
 Route::post('admin/send-mail/sendTrendingMail', 'Admin\DashboardController@sendTrendingMail')->middleware('usersession');
 Route::get('/delCategory/{cat_id}', 'Admin\DashboardController@delCategory')->middleware('usersession');
 Route::get('/delBrand/{brand_id}', 'Admin\DashboardController@delBrand')->middleware('usersession');
+Route::get('/markBrand/{brand_id}', 'Admin\DashboardController@markBrand')->middleware('usersession');
+Route::get('/unmarkBrand/{brand_id}', 'Admin\DashboardController@unmarkBrand')->middleware('usersession');
 Route::get('/delArch/{arch_id}', 'Admin\DashboardController@delArch')->middleware('usersession');
 Route::post('/updateBrand', 'Admin\DashboardController@updateBrand')->middleware('usersession');
 Route::get('admin/services/delService', 'Admin\ServicesController@delService')->middleware('usersession');

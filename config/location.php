@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'driver' => Stevebauman\Location\Drivers\IpInfo::class,
+    'driver' => Stevebauman\Location\Drivers\MaxMind::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ return [
 
         Stevebauman\Location\Drivers\GeoPlugin::class,
 
-        Stevebauman\Location\Drivers\MaxMind::class,
+        Stevebauman\Location\Drivers\IpInfo::class,
 
     ],
 

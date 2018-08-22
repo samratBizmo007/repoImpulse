@@ -145,7 +145,7 @@
       <div class="w3-col l6 w3-padding w3-border-left">
         <label class="theme_text"> Brands list:</label>
         <div ng-html-bind="@{{delMessage}}"></div>
-        <div class="w3-col l12" style="height: 360px;overflow-y: auto;">
+        <div class="w3-col l12" style="height: 360px;overflow-y: auto;" id="brand_listDiv">
          @if(empty($brands))
          <li class="w3-border-bottom w3-padding w3-center w3-text-red">
           <span>
@@ -154,10 +154,18 @@
         </li>
         @else
         @foreach ($brands as $br)
-        <div class="col-lg-4 w3-padding-small w3-margin-bottom">
-          <!-- <div class="w3-col l3 w3-padding-small" style="z-index: 1;position: absolute;">
-            <span class="fa fa-star w3-text-orange w3-left" style="border:1px solid" title="Featured Brand"></span>
-          </div> -->
+        <div class="col-lg-4 col-sm-6 col-xs-6 w3-padding-small w3-margin-bottom">
+          <div class="w3-col l3 w3-padding-small" style="z-index: 1;position: absolute;">
+            @if($br->status==0)
+            <a class="btn" ng-click="featureBrand({{$br->brand_id}},0)" style="padding: 0;margin: 0">
+            <span class="fa fa-star w3-text-orange w3-left" style="border:1px solid" title="Click here to unmark as Featured Brand"></span>
+            </a>
+            @else
+            <a class="btn" ng-click="featureBrand({{$br->brand_id}},1)" style="padding: 0;margin: 0">
+            <span class="fa fa-star w3-left" style="border:1px solid" title="Click here to mark as Featured Brand"></span>
+            </a>
+            @endif
+          </div>
           
           <div class="w3-col l12">
             <a data-toggle="modal" data-target="#brandModal_{{$br->brand_id}}" onclick="openModal('{{$br->brand_id}}')" class="btn w3-opacity w3-hover-opacity-off" style="padding: 0;margin: 0">

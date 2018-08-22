@@ -13,23 +13,6 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
-    public function mail()
-    {
-       $name = 'Krunal';
-//    Mail::send('email',
-//        array(
-//            'name' => 'Samrat',
-//            'email' => 'samrat.munde@bizmo-tech.com',
-//            'user_message' => 'Hello samrat'
-//        ), function($message)
-//    {
-//        $message->from('samrat.munde@bizmo-tech.com');
-//        $message->to('mundesamrat@gmail.com', 'Admin')->subject('Cloudways Feedback');
-//    });
-       Mail::to('samrat.munde@bizmo-tech.com')->send(new SendMailable($name));
-
-       return 'Email was sent';
-   }
     /**
      * Create a new controller instance.
      *
@@ -57,15 +40,15 @@ class HomeController extends Controller
         if($val=='Pune'){
             $loc_val='1';
         }
-        if($val=='OPune'){
-            $loc_val='2';
-        }
+        // if($val=='OPune'){
+        //     $loc_val='2';
+        // }
 
         // get all categories from DB
         $categories = DB::select('select * from category_tab');
 
         // get all brands from DB
-        $brands = DB::select('select * from brand_tab limit 6');
+        $brands = DB::select('select * from brand_tab where status=0 limit 6');
 
         // get all projects from db
         $all_projects = DB::select('select * from project_tab order by project_id desc');

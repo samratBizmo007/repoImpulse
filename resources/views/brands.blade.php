@@ -9,8 +9,8 @@
         <div class="container clearfix">
             <h1>Brands</h1>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active"><a href="#">Brands</a></li>
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Brands</a></li>
             </ol>
         </div>
 

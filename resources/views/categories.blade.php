@@ -10,7 +10,7 @@
             <h1>{{$category_details->category_name}}</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Category</a></li>
+                <!-- <li class="breadcrumb-item"><a href="#">Category</a></li> -->
                 <li class="breadcrumb-item active" aria-current="page">{{$category_details->category_name}}</li>
             </ol>
         </div>

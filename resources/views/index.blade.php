@@ -308,10 +308,14 @@
                         <div class="tabs tabs-justify nobottommargin clearfix" id="construction-tabs">
 
                             <ul class="tab-nav clearfix">
-                                <li><a href="#construction-tab-1">Why Us?</a></li>
-                                <li><a href="#construction-tab-2">Work Ethic</a></li>
-                                <li><a href="#construction-tab-3">Team</a></li>
-                                <li><a href="#construction-tab-4">Locations</a></li>
+                                <li class="w3-hide-small"><a href="#construction-tab-1">Why Us?</a></li>
+                                <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-1"><i class="fa fa-question-circle w3-large"></i> </a></li>
+                                <li class="w3-hide-small"><a href="#construction-tab-2">Work Ethic</a></li>
+                                <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-2"><i class="fa fa-wikipedia-w w3-large"></i></a></li>
+                                <li class="w3-hide-small"><a href="#construction-tab-3">Team</a></li>
+                                <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-3"><i class="fa fa-users w3-large"></i></a></li>
+                                <li class="w3-hide-small"><a href="#construction-tab-4">Locations</a></li>
+                                <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-4"><i class="fa fa-map-marker w3-large"></i></a></li>
                             </ul>
 
                             <div class="tab-container">

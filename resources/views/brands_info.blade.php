@@ -10,7 +10,7 @@
             <h1>{{$brand_details->brand_name}}</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Brands</a></li>
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}/brands">Brands</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{$brand_details->brand_name}}</li>
             </ol>
         </div>

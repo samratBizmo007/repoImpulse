@@ -9,8 +9,8 @@
         <div class="container clearfix">
             <h1>{{$prod_details->prod_name}}</h1>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
+                <!-- <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Products</a></li> -->
                 <li class="breadcrumb-item active" aria-current="page">{{$prod_details->prod_name}}</li>
             </ol>
         </div>

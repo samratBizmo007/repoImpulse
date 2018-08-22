@@ -20,7 +20,7 @@ class AboutController extends Controller
     }
 
     /**
-     * Show the Services page.
+     * Show the About us page.
      *
      * @return \Illuminate\Http\Response
      */

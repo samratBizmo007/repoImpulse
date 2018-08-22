@@ -38,10 +38,10 @@
     <script>
         $(document).ready(function(){
             $.ajax({
-        url: "https://geoip-db.com/jsonp",
-        jsonpCallback: "callback",
-        dataType: "jsonp",
-        success: function( location ) {
+                url: "https://geoip-db.com/jsonp",
+                jsonpCallback: "callback",
+                dataType: "jsonp",
+                success: function( location ) {
             // $('#country').html(location.country_name);
             // $('#state').html(location.state);
             $('#curr_location').html('<a>'+location.city+'</a>');
@@ -54,7 +54,7 @@
         }
     }); 
         });
-     
+        
     </script>
 </head>
 <body class="stretched"> 
@@ -158,14 +158,15 @@
                             <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
 
                             <ul>
-                                <li class="current"><a href="{{URL::to('/')}}"><div>Home</div></a></li>
-                                <li><a href="#"><div>Company</div></a>
+                                <li class="<?php if(Route::current()->getName() == '/'){ echo 'current';} ?>"><a href="{{URL::to('/')}}"><div>Home</div></a></li>
+                                <li class="<?php if(Route::current()->getName() == '/contact-us' || Route::current()->getName() == '/career' || Route::current()->getName() == '/about-us'){ echo 'current';} ?>"><a href=""><div>Company</div></a>
                                     <ul>
+                                        <li><a href="{{URL::to('/')}}/about-us"><div>About Company</div></a></li>
                                         <li><a href="{{URL::to('/')}}/contact-us"><div>Contact Us</div></a></li>
                                         <li><a href="{{URL::to('/')}}/career"><div>Careers</div></a></li>
                                     </ul>
                                 </li>
-                                <li class="mega-menu"><a href="#"><div>Products</div></a>
+                                <li class="mega-menu <?php if(Route::current()->getName() == ''){ echo 'current';} ?>"><a href="#"><div>Products</div></a>
                                     <div class="mega-menu-content style-2 clearfix">
                                         <ul class="mega-menu-column col-lg-6 col-sm-12 col-xs-12">
                                             <li class="mega-menu-title"><a href="#"><div>By Category</div></a>
@@ -198,8 +199,8 @@
                                                         <?php 
                                                         $secRow++;
                                                         if($secRow==10){
-                                                       
-                                                        break;
+                                                         
+                                                            break;
                                                         }
                                                     }
                                                     ?>
@@ -237,8 +238,8 @@
                                                         <?php 
                                                         $secRowBr++;
                                                         if($secRowBr==9){
-                                                        echo '<li><a href="'.URL::to('/').'/brands"><div>Others</div></a></li>';
-                                                        break;
+                                                            echo '<li><a href="'.URL::to('/').'/brands"><div>Others</div></a></li>';
+                                                            break;
                                                         }
                                                     }
                                                     ?>
@@ -248,10 +249,10 @@
 
                                     </div>
                                 </li>
-                                <li><a href="{{URL::to('/')}}/trending"><div>Trends</div></a></li>
+                                <li class="<?php if(Route::current()->getName() == '/trending'){ echo 'current';} ?>"><a href="{{URL::to('/')}}/trending"><div>Trends</div></a></li>
                                 
-                                <li><a href="{{URL::to('/')}}/projects"><div>Projects</div></a></li>
-                                <li><a href="{{URL::to('/')}}/services"><div>Services</div></a></li>
+                                <li class="<?php if(Route::current()->getName() == '/projects'){ echo 'current';} ?>"><a href="{{URL::to('/')}}/projects"><div>Projects</div></a></li>
+                                <li class="<?php if(Route::current()->getName() == '/services'){ echo 'current';} ?>"><a href="{{URL::to('/')}}/services"><div>Services</div></a></li>
                             </ul>
 
                         <!-- Top Search
@@ -294,10 +295,10 @@
                                 <div class="line" style="margin: 30px 0;"></div>
                                 <div class="w3-col l6">
                                     <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
-                                            <i class="icon-facebook"></i>
-                                            <i class="icon-facebook"></i>
-                                        </a>
-                                        <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
+                                        <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
+                                    </a>
+                                    <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
                                 <!-- 
                                     <div class="widget subscribe-widget clearfix">
                                         <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
@@ -316,7 +317,7 @@
                                         </form>
                                         <div id="formOutput"></div>
                                     </div>
-                                 --></div>
+                                --></div>
                             </div>
 
                         </div>
@@ -366,18 +367,18 @@
                     <div class="container clearfix">
 
                         <div class="col_half">
-                            Copyrights &copy; 2018 All Rights Reserved by Impulse World Trends.<br>
-                            <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
+                            Copyrights &copy; 2018 All Rights Reserved | Impulse World Trends.<br>
+                            <div class="copyright-links">Powered by <a href="https://bizmo-tech.com" target="_blank">Bizmo Technologies</a></div>
                         </div>
 
                         <div class="col_half col_last tright">
                             <div class="copyrights-menu copyright-links clearfix">
                                 <a href="/">Home</a>/
+                                <a href="/about-us">About</a>/
                                 <a href="/trending">Trends</a>/
                                 <a href="/brands">Brands</a>/
                                 <a href="/projects">Projects</a>/
                                 <a href="/services">Services</a>/
-                                <a href="/contact-us">Contact</a>/
                                 <a href="/career">Career</a>
                             </div>
                         </div>
@@ -394,8 +395,8 @@
         ============================================= -->
         <div id="gotoTop" class="icon-angle-up"></div>
     </body>
-<script src="{{ asset('template/js/plugins.js') }}"></script>
+    <script src="{{ asset('template/js/plugins.js') }}"></script>
 
-<!-- Footer Scripts============================================= -->
-<script src="{{ asset('template/js/functions.js') }}"></script>
-</html>
+    <!-- Footer Scripts============================================= -->
+    <script src="{{ asset('template/js/functions.js') }}"></script>
+    </html>

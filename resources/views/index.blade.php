@@ -78,35 +78,35 @@
                                     <div class="w3-col l4 w3-padding w3-margin-bottom">
                                       <div class="w3-col l12">
                                         <a href="{{URL::to('/')}}/brands/info/<?php echo base64_encode($br->brand_id); ?>" class="btn w3-hover-opacity" style="padding: 0;margin: 0">
-                                          <img src="{{URL::to('/')}}/{{$br->brand_image}}" class="img" style="width: 100%;height: 160px;">
-                                      </a>
-                                  </div>
-                              </div>
-                              @endforeach
-                              @else
-                              <div class="w3-col l12 w3-center w3-padding">
-                                <h3>No Brands Available</h3>
-                            </div>
-                            @endif
-                        </ul>
+                                            <img src="{{URL::to('/')}}/{{$br->brand_image}}" class="img" style="width: 100%;height: 160px;">
+                                        </a>
+                                    </div>
+                                </div>
+                                @endforeach
+                                @else
+                                <div class="w3-col l12 w3-center w3-padding">
+                                    <h3>No Brands Available</h3>
+                                </div>
+                                @endif
+                            </ul>
+                        </div>
+                        <div class="w3-col l12 w3-center">
+                            <a href="{{URL::to('/')}}/brands" class="btn button button-3d w3-center">Browse More Brands <i class="fa fa-chevron-right"></i></a>
+                        </div>
                     </div>
-                    <div class="w3-col l12 w3-center">
-                        <a href="{{URL::to('/')}}/brands" class="btn button button-3d w3-center">Browse More Brands <i class="fa fa-chevron-right"></i></a>
+
+                    <div class="divider divider-center divider-border"><i class="icon-diamond"></i></div>
+                </div>
+                <!-- end -->
+                <!-- Product list starts ============================================= -->
+                <div class="section nomargin nobg clearfix" style="padding: 0px 0;">
+                    <div class="container clearfix">
+
+                     <div class="heading-block center" style="margin-bottom: 20px">
+                        <h3>Popular Products</h3>
+                        <span>Checkout our Featured & Popular Products</span>
                     </div>
-                </div>
-
-                <div class="divider divider-center divider-border"><i class="icon-diamond"></i></div>
-            </div>
-            <!-- end -->
-            <!-- Product list starts ============================================= -->
-            <div class="section nomargin nobg clearfix" style="padding: 0px 0;">
-                <div class="container clearfix">
-
-                 <div class="heading-block center" style="margin-bottom: 20px">
-                    <h3>Popular Products</h3>
-                    <span>Checkout our Featured & Popular Products</span>
-                </div>
-                <div class="clear"></div>
+                    <div class="clear"></div>
 
                         <!-- Portfolio Items
                             ============================================= -->
@@ -412,18 +412,18 @@
 
                     <div class="col_one_fourth col_last">
 
-                                    <h4>Quick Contact</h4>
-                                    <div class="quick-contact-form-result"></div>
-                                    <form id="quickContact" name="quickContact" class="quick-contact-form nobottommargin">
-                                        <input type="text" class="required sm-form-control input-block-level w3-margin-bottom" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
-                                        <input type="text" class="required sm-form-control email input-block-level w3-margin-bottom" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
-                                        <textarea class="required sm-form-control input-block-level short-textarea w3-margin-bottom" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
-                                        <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
-                                        <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
-                                        <button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin w3-margin-bottom" value="submit">Send Email</button>
-                                    </form>
-                                    <div id="formOutput"></div>
-                                </div>
+                        <h4>Quick Contact</h4>
+                        <div class="quick-contact-form-result"></div>
+                        <form id="quickContact" name="quickContact" class="quick-contact-form nobottommargin">
+                            <input type="text" class="required sm-form-control input-block-level w3-margin-bottom" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
+                            <input type="text" class="required sm-form-control email input-block-level w3-margin-bottom" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
+                            <textarea class="required sm-form-control input-block-level short-textarea w3-margin-bottom" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
+                            <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+                            <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+                            <button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin w3-margin-bottom" value="submit">Send Email</button>
+                        </form>
+                        <div id="formOutput"></div>
+                    </div>
                     <!-- <div class="clear"></div><div class="line notopmargin" style="margin-bottom: 0"></div> -->
                 </div>
                 <!-- Quick quotes ends -->                

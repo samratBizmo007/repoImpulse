@@ -98,7 +98,7 @@
                                     Near VLCC,, Deccan Gymkhana,<br>
                                     Pune, Maharashtra 411004<br>
                                 </address>
-                                <abbr title="Phone Number"><strong>Phone:</strong></abbr> (91) 84110 09080<br>
+                                <abbr title="Contact Number"><strong>Phone:</strong></abbr> (91) 84110 09080<br>
                             </div>
 
                             <div class="line line-sm"></div>

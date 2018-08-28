@@ -139,7 +139,7 @@
                                     </div>
                                     @if($brand_details->external_link!='' && $brand_details->external_link!='Null')
                                     <div class="w3-col l12 w3-center">
-                                        <a href="{{$brand_details->external_link}}" target="_blank" class="btn button button-3d w3-right">Go to Catalog<i class="fa fa-chevron-right"></i></a>
+                                        <a class="btn button button-3d w3-right" target="_self" href="{{URL::to('/')}}/{{$brand_details->external_link}}" download="{{$brand_details->brand_name}} Catalog">Get Brand Catalog <i class="fa fa-download"></i></a>
                                     </div>
                                     @endif
                                 </div>
@@ -154,7 +154,7 @@
                                     <!-- Related Portfolio Items ============================================= -->
                                     <h4>Related Projects:</h4>
                                     @if($related_projects!='')
-                                    <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="2" data-items-sm="3" data-items-xl="4">
+                                    <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="3" data-items-xl="4">
                                         <?php $curr_proj=0; ?>
                                         @foreach($related_projects as $proj)
                                         <?php 

@@ -14,6 +14,7 @@ function readURL(input) {
           $("#addBrandbtn").attr("disabled", true);
         } else {
           $('#image_error').html('');
+          $('#imgPreview').show();
           reader.onload = function (e) {
            $('#imgPreview').attr('src', e.target.result);
          }
@@ -140,6 +141,35 @@ $scope.removeArch = function (arch_id) {
        $http({
          method: 'get',
          url: '/delArch/'+arch_id,
+         //params: {product_id: product_id},
+       }).then(function successCallback(response) {
+        $window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+          });
+          location.reload();
+        }, 10);
+
+        // $scope.getServices();
+      }); 
+     },
+     cancel: function () {
+     }
+   }
+ });
+}
+
+// remove architect from db
+$scope.delSubscriber = function (sub_id) {
+  $.confirm({
+    title: '<h4 class="w3-text-red">Please confirm the action!</h4><span class="w3-medium">Do yo really want to delete this subscriber?</span>',
+    content: '',
+    type: 'red',
+    buttons: {
+      confirm: function () {
+       $http({
+         method: 'get',
+         url: '/delSubscriber/'+sub_id,
          //params: {product_id: product_id},
        }).then(function successCallback(response) {
         $window.setTimeout(function() {
@@ -327,6 +357,48 @@ $("#addArchitectForm").on('submit', function(e) {
 return false;  //stop the actual form post !important!
 });
 
+// add new architect
+$("#subscriberMailForm").on('submit', function(e) {
+ e.preventDefault(); 
+ $.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('#_token').val()
+  }
+});
+ $.ajax({
+    url: "upload/uploadMailFile", // point to server-side PHP script
+    data: new FormData(this),
+    type: 'POST',
+    contentType: false, // The content type used when sending data to the server.
+    cache: false, // To unable request pages to be cached
+    processData: false,
+    beforeSend: function(){
+      $("#addMailFormatBtn").attr("disabled", true);
+      $('#addMailFormatBtn').html('<i class="fa fa-spinner fa-spin w3-medium"></i> Uploading...');
+    },
+    success: function(data){
+      $('#errMailerMsg').html(data);
+      $('#addMailFormatBtn').removeAttr("disabled");
+      $('#addMailFormatBtn').html('<i class="fa fa-upload"></i>');
+      window.setTimeout(function() {
+        window.location.reload();
+      }, 1500);
+    },
+    error:function(data){
+      $('#addMailFormatBtn').removeAttr("disabled");
+      $('#errMailerMsg').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');
+
+      $('#addMailFormatBtn').html('<i class="fa fa-upload"></i>');
+      window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+        });
+      }, 5000);
+    }
+ });
+return false;  //stop the actual form post !important!
+});
+
 });
 
 // ------------send mail to architects--------------
@@ -363,6 +435,67 @@ $(function () {
       $('#ArchMailErrMsg').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');
 
       $('#SendMailBtn').html('<i class="fa fa-paper-plane w3-medium"></i> Send Mail to Marked');
+      window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+        });
+      }, 5000);
+    }
+  });
+  return false;
+      });
+});
+
+// ------------send mail to architects--------------
+
+
+// ----function to preview selected image for product------//
+function readMailFile(input) {
+  if (input.files && input.files[0]) {
+
+    var extension = $('#mail_document').val().split('.').pop().toLowerCase();
+        // image validation
+        if ($.inArray(extension, ['html', 'htm']) == -1) {
+          $('#errMailerMsg').html('<i class="fa fa-remove"></i> ERROR: Please Select (.html)/(.htm) File. ');
+          $("#addMailFormatBtn").attr("disabled", true);
+        } else {
+          $('#errMailerMsg').html('');
+         $('#addMailFormatBtn').removeAttr("disabled");
+       }
+     }
+   }
+
+// ------------send mail to subscribers--------------
+$(function () {
+  $("#SendSubscriberBtn").click(function () {
+    $('#SubcriberMailErrMsg').html('');
+    
+   $.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('#_token').val()
+    }
+  });
+   $.ajax({
+    type: "GET",
+    url: "send-mail/sendSubscriberMail",
+    return: false, 
+    beforeSend: function(){
+      $("#SendSubscriberBtn").attr("disabled", true);
+      $('#SendSubscriberBtn').html('<i class="fa fa-spinner fa-spin w3-medium"></i> Sending Mail...');
+    },
+    success: function(data){
+      $('#SubcriberMailErrMsg').html(data);
+      $('#SendSubscriberBtn').removeAttr("disabled");
+      $('#SendSubscriberBtn').html('<i class="fa fa-paper-plane w3-medium"></i> Send Mail to Subscribers');
+      window.setTimeout(function() {
+        window.location.reload();
+      }, 1500);
+    },
+    error:function(data){
+      $('#SendSubscriberBtn').removeAttr("disabled");
+      $('#SubcriberMailErrMsg').html('<div class="alert alert-warning alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.</div>');
+
+      $('#SendSubscriberBtn').html('<i class="fa fa-paper-plane w3-medium"></i> Send Mail to Subscribers');
       window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function(){
           $(this).remove(); 

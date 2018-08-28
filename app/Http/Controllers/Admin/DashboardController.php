@@ -37,7 +37,10 @@ class DashboardController extends Controller
         // get all architects from DB
         $arch = DB::select('select * from architect_tab order by arch_id DESC');
 
-        return view('admin.dash',['categories'=>$categories,'brands'=>$brands,'arch'=>$arch]);
+        // get all subscribers from DB
+        $subscribers = DB::select('select * from subscriber_tab where status=0 order by subscriber_id DESC');
+
+        return view('admin.dash',['categories'=>$categories,'brands'=>$brands,'arch'=>$arch,'subscribers'=>$subscribers]);
     }
 
     /**
@@ -101,12 +104,15 @@ class DashboardController extends Controller
             $mobile='0';
         }
         $date=date('Y-m-d');
-
+        
         // insert category name into  db
         $checkInsert = DB::insert('insert into architect_tab(arch_name,arch_email,arch_mobile,arch_landline,arch_address,added_on,status) values(?,?,?,?,?,?,?)', [$request->input('arch_name'),$request->input('arch_email'),$mobile,$landline,$request->input('arch_address'),$date,0]);
         //print_r($request->input('arch_address'));die();
 
         if($checkInsert){
+            if($request->input('addtoSubscriber')){
+                $addToSubscribeTab = DB::insert('insert into subscriber_tab (subscriber_email,status) values(?,?)', [$request->input('arch_email'),'0']);
+            }
             echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Architect added.</div>';
         }
         else{
@@ -124,18 +130,30 @@ class DashboardController extends Controller
     {
 
         $file = $request->file('brand_image');
+        $catalog='';
+
         // getting image extension
         $extension = $file->getClientOriginalExtension(); 
         $filename =$request->input('brand_name').'_logo.'.$extension;
         $brand_path=$file->move('template\images\brands', $filename);
 
-        $link=$request->input('ext_link');
-        if($link==''){
-            $link='Null';
+        // file uploading code
+        if($request->hasfile('brand_catalog'))
+        {
+            $file=$request->file('brand_catalog');
+            //$img_arr=array();
+            $file_extension = $file->getClientOriginalExtension(); 
+            $originalname=$file->getClientOriginalName();
+            $filename =$originalname;
+            $catalog=$file->move('template\images\brands\files', $filename);
         }
+        else{
+            $catalog='Null';
+        }
+// print_r($catalog);die();
 
         // insert category name into  db
-        $checkInsert = DB::insert('insert into brand_tab (brand_name,brand_image,description,external_link) values(?,?,?,?)', [$request->input('brand_name'),$brand_path,$request->input('description'),$link]);
+        $checkInsert = DB::insert('insert into brand_tab (brand_name,brand_image,description,external_link) values(?,?,?,?)', [$request->input('brand_name'),$brand_path,$request->input('description'),$catalog]);
 
         if($checkInsert){
             echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Brand added.</div>';
@@ -153,12 +171,28 @@ class DashboardController extends Controller
      */
     public function updateBrand(Request $request)
     {      
-        $link=$request->input('update_ext_link');
-        if($link==''){
-            $link='Null';
+        $uploaded=$request->input('update_catalog');
+        $catalog='';
+        // file uploading code
+        if($request->hasfile('update_catalog'))
+        {
+            $file=$request->file('update_catalog');
+            //$img_arr=array();
+            $file_extension = $file->getClientOriginalExtension(); 
+            $originalname=$file->getClientOriginalName();
+            $filename =$originalname;
+            $catalog=$file->move('template\images\brands\files', $filename);
+        }
+        else{
+            if($uploaded!='Null' && $uploaded!=''){
+                $catalog=$uploaded;
+            }
+            else{
+                $catalog='Null';
+            }            
         }
         // update product details  db
-        $checkUpdate = DB::update('update brand_tab set brand_name = ?,description=?,external_link=? where brand_id=?', [$request->input('update_brand_name'),$request->input('update_description'),$link,$request->input('id')]);
+        $checkUpdate = DB::update('update brand_tab set brand_name = ?,description=?,external_link=? where brand_id=?', [$request->input('update_brand_name'),$request->input('update_description'),$catalog,$request->input('id')]);
         
         if($checkUpdate){
             echo '<div class="alert alert-success alert-fixed alert-dismissible fade in w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> Brand updated successfully.</div>';
@@ -202,6 +236,23 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Delete subscriber from DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delSubscriber(Request $request)
+    {
+        // delete category name from  db
+        $checkDelete = DB::delete('delete from subscriber_tab where subscriber_id = ?', [$request->segment(2)]);
+        if($checkDelete){
+            echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success-</strong> subscriber deleted.</div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> subscriber deletion failed!</div>';
+        }
+    }
+
 
      /**
      * send mail to architect
@@ -234,6 +285,7 @@ class DashboardController extends Controller
                 Mail::send('mails.architect_mailFormat', $data, function ($message)use ($contact_mail) {
                     $message->from('impulse@bizmo-tech.com', 'Impulse World Trends ADMIN');        
                     $message->to($contact_mail)->subject('Trending Products - Impulse World Trends');
+                    $message->getSwiftMessage()->getHeaders();
                 }); 
 
             }
@@ -245,6 +297,79 @@ class DashboardController extends Controller
         }
         
     }
+
+     /**
+     * send mail to subscribers
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function sendSubscriberMail(Request $request)
+     {
+        // get mail format
+        $mailFile = DB::select('select setting_value from admin_settings where setting_name=?',['subscriber_mail']);
+
+        if($mailFile[0]->setting_value==''){
+            echo '<h5 class="w3-text-red">Warning: Please upload Mail File to be send to subscriber.</h5>';
+        }
+        else{
+            $filePath='mails.subscriberMailFormat';
+
+            // get all subscribers from DB
+            $subscribers = DB::select('select * from subscriber_tab where status=0 order by subscriber_id DESC');
+            if(empty($subscribers)){
+                echo '<h5 class="w3-text-red">Warning: No Subscribers Found.</h5>';
+            }
+            else{
+                foreach ($subscribers as $key) {
+                    $contact_mail=str_replace(' ', '', $key->subscriber_email);
+                    $data = array(
+                        'contact_email' => $contact_mail,
+                        'file_path' => $mailFile[0]->setting_value
+                    );
+                // print_r($data);die();
+                    Mail::send($filePath, $data, function ($message)use ($contact_mail) {
+                        $message->from('impulse@bizmo-tech.com', 'Impulse World Trends ADMIN');        
+                        $message->to($contact_mail)->subject('Newsletter from Impulse World Trends');
+                        $message->getSwiftMessage()->getHeaders();
+                    }); 
+
+                }
+                echo '<h5 class="w3-text-green">Newsletter has been send to all subscribers.</h5>';  
+            }
+        }
+    }
+
+    /**
+     * supload mailer file
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadMailFile(Request $request)
+    {
+        // print_r($_FILES);die();
+        // file uploading code
+        if($request->hasfile('mail_document'))
+        {
+            $file=$request->file('mail_document');
+            //$img_arr=array();
+            $file_extension = $file->getClientOriginalExtension(); 
+            $filename ='MailFormat_'.time().'.'.$file_extension;
+            $mailFile=$file->move('uploads\files\mail', $filename);
+
+            $checkUpdate=DB::update('update admin_settings set setting_value = ? where setting_name=?', [$mailFile,'subscriber_mail']);
+            if($checkUpdate){
+                echo '<h5 class="w3-text-green">File uploaded successfully.</h5>';
+            }
+            else{
+                echo '<h5 class="w3-text-red">Warning: Mail File was not uploaded.</h5>';
+            }
+        }
+        else{
+            echo '<h5 class="w3-text-red">Warning: File Not selected.</h5>';
+        }
+    }
+
+
 
     /**
      * mark feature brand into DB.

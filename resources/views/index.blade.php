@@ -2,7 +2,27 @@
 
 @section('content')
 <title>Impulse Trends | Home</title>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "https://geoip-db.com/jsonp",
+            jsonpCallback: "callback",
+            dataType: "jsonp",
+            success: function( location ) {
+            // $('#country').html(location.country_name);
+            // $('#state').html(location.state);
+            $('#curr_location').html('<a>'+location.city+'</a>');
+            $('#curr_location_text').val(location.city);
+            $.cookie('Location', location.city, { expires: 30});
 
+            // $('#latitude').html(location.latitude);
+            // $('#longitude').html(location.longitude);
+            // $('#ip').html(location.IPv4);  
+        }
+    }); 
+    });
+    
+</script>
 
 <section id="slider" class="slider-element slider-parallax swiper_wrapper clearfix" style="height: 550px;" data-loop="true">
 
@@ -102,7 +122,7 @@
                 <div class="section nomargin nobg clearfix" style="padding: 0px 0;">
                     <div class="container clearfix">
 
-                     <div class="heading-block center" style="margin-bottom: 20px">
+                       <div class="heading-block center" style="margin-bottom: 20px">
                         <h3>Popular Products</h3>
                         <span>Checkout our Featured & Popular Products</span>
                     </div>
@@ -113,7 +133,9 @@
                             <div id="portfolio" class="portfolio portfolio-3 grid-container clearfix" data-layout="fitRows">
 
                                 @if($products!='')
+
                                 @foreach($products as $prod)
+                                
                                 <?php 
                                 $img_arr=json_decode($prod->prod_image,TRUE);
                                 ?>
@@ -153,7 +175,7 @@
                     <!-- Projects section start -->
                     <!-- Recent projects section -->
                     <div class="container">
-                       <div class="heading-block center" style="margin-top:0px;margin-bottom: 20px">
+                     <div class="heading-block center" style="margin-top:0px;margin-bottom: 20px">
                         <h3>Recent Projects</h3>
                         <span>Know our recent projects and associated products</span>
                     </div>
@@ -251,53 +273,36 @@
                 <!-- Services section ends -->
 
                 <!-- Testimonials start -->
-                <div class="section parallax dark" style="background-image: url('template/images/slider/1.jpg'); padding: 120px 0;"  data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
+                <div class="section parallax dark" style="background-image: url('template/images/testimonials/testibg2.jpg'); padding: 100px 0;"  data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
 
                     <div class="fslider testimonial testimonial-full" data-arrows="false" style="z-index: 2;">
                         <div class="flexslider">
                             <div class="slider-wrap">
                                 <div class="slide">
                                     <div class="testi-image">
-                                        <a href="#"><img src="template/images/testimonials/3.jpg" alt="Customer Testimonails"></a>
+                                        <a href="#"><img src="template/images/testimonials/testimonial1.jpeg" alt="Customer Testimonails"></a>
                                     </div>
                                     <div class="testi-content">
-                                        <p>Similique fugit repellendus expedita excepturi iure provident quia eaque. Repellendus, vero numquam?</p>
+                                        <p class="w3-large">We have used various products from impulse and found the array of products exemplary. Your showroom is a great inspiration towards the wide variety of tiles, sanitary and related interior products. Rajeshbhai’s passion and the impeccable service towards his clientele are greatly appreciated. We look forward to working on many more projects.</p>
                                         <div class="testi-meta">
-                                            Steve Jobs
-                                            <span>Apple Inc.</span>
+                                            Vinod Shah
                                         </div>
                                     </div>
                                 </div>
                                 <div class="slide">
                                     <div class="testi-image">
-                                        <a href="#"><img src="template/images/testimonials/2.jpg" alt="Customer Testimonails"></a>
+                                        <a href="#"><img src="template/images/testimonials/testimonial2.jpg" alt="Customer Testimonails"></a>
                                     </div>
                                     <div class="testi-content">
-                                        <p>Natus voluptatum enim quod necessitatibus quis expedita harum provident eos obcaecati id culpa corporis molestias.</p>
+                                        <p class="w3-large">We have been sourcing from Impulse World Trends for last several years. Mr. Rajesh Kurade takes personal interest in every project. Store has most wonderful display and they keep adding newer and innovative products at competitive rates. The staff at Impulse is very courteous and ever eager to serve the customers.</p>
                                         <div class="testi-meta">
-                                            Collis Ta'eed
-                                            <span>Envato Inc.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="slide">
-                                    <div class="testi-image">
-                                        <a href="#"><img src="template/images/testimonials/1.jpg" alt="Customer Testimonails"></a>
-                                    </div>
-                                    <div class="testi-content">
-                                        <p>Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum!</p>
-                                        <div class="testi-meta">
-                                            John Doe
-                                            <span>XYZ Inc.</span>
+                                            Ar. Anita Bhinge
+                                            <span>SpaceTech</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="video-wrap" style="z-index: 1;">
-                        <div class="video-overlay" style="background: rgba(241,128,82,0.9);"></div>
                     </div>
                 </div>
                 <!-- Testimonials section ends -->
@@ -310,8 +315,6 @@
                             <ul class="tab-nav clearfix">
                                 <li class="w3-hide-small"><a href="#construction-tab-1">Why Us?</a></li>
                                 <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-1"><i class="fa fa-question-circle w3-large"></i> </a></li>
-                                <li class="w3-hide-small"><a href="#construction-tab-2">Work Ethic</a></li>
-                                <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-2"><i class="fa fa-wikipedia-w w3-large"></i></a></li>
                                 <li class="w3-hide-small"><a href="#construction-tab-3">Team</a></li>
                                 <li class="w3-hide-large w3-hide-medium"><a href="#construction-tab-3"><i class="fa fa-users w3-large"></i></a></li>
                                 <li class="w3-hide-small"><a href="#construction-tab-4">Locations</a></li>
@@ -321,7 +324,7 @@
                             <div class="tab-container">
 
                                 <div class="tab-content clearfix" id="construction-tab-1">
-                                    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+                                    <p>We are fully aware of the tremendous, important responsibility on your shoulders, as creative professionals, to specify or select the latest and the best interior and exterior components for your projects. To assist you in this quest for quality and excellence, we take great pleasure in introducing ourselves <b>IMPULSE World Trends</b> as a premium one stop showroom of the world’s latest interior products.</p>
                                     <div class="col_one_fourth nobottommargin center">
                                         <div class="counter ls1 t600" style="color: #D2D2D2;"><span data-from="100" data-to="964" data-refresh-interval="50" data-speed="2000"></span></div>
                                         <h5>Floors Built</h5>
@@ -329,7 +332,7 @@
 
                                     <div class="col_one_fourth nobottommargin center">
                                         <div class="counter ls1 t600" style="color: #D2D2D2;"><span data-from="100" data-to="8514" data-refresh-interval="50" data-speed="2500"></span></div>
-                                        <h5>Employees</h5>
+                                        <h5>Staff</h5>
                                     </div>
 
                                     <div class="col_one_fourth nobottommargin center">
@@ -342,12 +345,8 @@
                                         <h5>Cities Served</h5>
                                     </div>
                                 </div>
-                                <div class="tab-content clearfix" id="construction-tab-2">
-                                    <img src="template/images/projects/3.jpg" width="260" alt="Image" class="img-thumbnail alignleft">
-                                    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-                                </div>
                                 <div class="tab-content clearfix" id="construction-tab-3">
-                                    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+                                    <p>We possess a passionate and courteous staff and technical assistants to guide our clients and consult the best to them. Following qualities of our team will surely impress you:</p>
                                     <div class="row clearfix">
                                         <div class="col-md-4">
                                             <ul class="iconlist nobottommargin">
@@ -359,15 +358,15 @@
                                         <div class="col-md-4">
                                             <ul class="iconlist nobottommargin">
                                                 <li><i class="icon-ok"></i> Intelligent</li>
-                                                <li><i class="icon-ok"></i> Always Curious</li>
+                                                <li><i class="icon-ok"></i> Creative</li>
                                                 <li><i class="icon-ok"></i> Perfectionists</li>
                                             </ul>
                                         </div>
                                         <div class="col-md-4">
                                             <ul class="iconlist nobottommargin">
                                                 <li><i class="icon-ok"></i> Friendly &amp; Helpful</li>
-                                                <li><i class="icon-ok"></i> Accomodating Nature</li>
-                                                <li><i class="icon-ok"></i> Available 24x7</li>
+                                                <li><i class="icon-ok"></i> Trained</li>
+                                                <li><i class="icon-ok"></i> Professional</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -377,66 +376,64 @@
                                     <div class="clear-bottommargin-sm">
                                         <div class="row clearfix">
                                             <div class="col-md-7 bottommargin-sm">
-                                                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor.</p>
+                                                <p>After launching this dream display of 4000sq.ft of a space at Bhandarkar road, we are stringently sourced, selected and collected the latest and the best world trends for discerning clients. We are offering you the most fascinating and widest range in each product category.</p>
                                                 <div class="clear-bottommargin-sm">
                                                     <div class="row clearfix">
                                                         <div class="col-md-6 bottommargin-sm">
                                                             <address>
                                                                 <strong>Headquarters:</strong><br>
-                                                                795 Folsom Ave, Suite 600<br>
-                                                                San Francisco, CA 94107<br>
+                                                                C.T.S. No.799-A, Bhandarkar Road,<br>
+                                                                Near VLCC,, Deccan Gymkhana,<br>
+                                                                Pune, Maharashtra 411004<br>
                                                             </address>
                                                         </div>
                                                         <div class="col-md-6 bottommargin-sm">
-                                                            <abbr title="Phone Number"><strong>Phone:</strong></abbr> (91) 8547 632521<br>
-                                                            <abbr title="Fax"><strong>Fax:</strong></abbr> (91) 11 4752 1433<br>
-                                                            <abbr title="Email Address"><strong>Email:</strong></abbr> info@canvas.com
+                                                            <abbr title="Contact Number"><strong>Phone:</strong></abbr> (91) 84110 09080<br>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 bottommargin-sm">
-                                                
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15132.900528883341!2d73.8324251!3d18.5187258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf850342e151%3A0x9b53009ae375dcaf!2sImpulse+World+Trends!5e0!3m2!1sen!2sin!4v1532939570739" width="300" height="180" frameborder="0" style="border:0" allowfullscreen></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
+                                             <img src="template/images/showroom.jpg" width="260" alt="Image" class="img-thumbnail aligncenter">
+                                         </div>
+                                     </div>
+                                 </div>
 
-                                </div>
+                             </div>
 
-                            </div>
+                         </div>
 
-                        </div>
+                     </div>
 
-                    </div>
+                 </div>
 
-                    <div class="col_one_fourth col_last">
+                 <div class="col_one_fourth col_last">
 
-                        <h4>Quick Contact</h4>
-                        <div class="quick-contact-form-result"></div>
-                        <form id="quickContact" name="quickContact" class="quick-contact-form nobottommargin">
-                            <input type="text" class="required sm-form-control input-block-level w3-margin-bottom" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
-                            <input type="text" class="required sm-form-control email input-block-level w3-margin-bottom" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
-                            <textarea class="required sm-form-control input-block-level short-textarea w3-margin-bottom" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
-                            <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
-                            <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
-                            <button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin w3-margin-bottom" value="submit">Send Email</button>
-                        </form>
-                        <div id="formOutput"></div>
-                    </div>
-                    <!-- <div class="clear"></div><div class="line notopmargin" style="margin-bottom: 0"></div> -->
+                    <h4>Quick Contact</h4>
+                    <div class="quick-contact-form-result"></div>
+                    <form id="quickContact" name="quickContact" class="quick-contact-form nobottommargin">
+                        <input type="text" class="required sm-form-control input-block-level w3-margin-bottom" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
+                        <input type="text" class="required sm-form-control email input-block-level w3-margin-bottom" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
+                        <textarea class="required sm-form-control input-block-level short-textarea w3-margin-bottom" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
+                        <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+                        <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+                        <button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin w3-margin-bottom" value="submit">Send Email</button>
+                    </form>
+                    <div id="formOutput"></div>
                 </div>
-                <!-- Quick quotes ends -->                
+                <!-- <div class="clear"></div><div class="line notopmargin" style="margin-bottom: 0"></div> -->
             </div>
-        </section>
-        <!-- #content end -->
+            <!-- Quick quotes ends -->                
+        </div>
+    </section>
+    <!-- #content end -->
 
-        <div class="w3-row">
-           <a href="{{URL::to('/')}}/contact-us" class="button button-3d nobottomborder button-full center tright t300 font-primary" style="font-size: 26px;margin-top: 50px">
-            <div class="container clearfix">
-                Would you like to Build your Dream Home with Us? <strong>Enquire Here</strong> <i class="icon-angle-right" style="top:3px;"></i>
-            </div>
-        </a>
-    </div>
+    <div class="w3-row">
+     <a href="{{URL::to('/')}}/contact-us" class="button button-3d nobottomborder button-full center tright t300 font-primary" style="font-size: 26px;margin-top: 50px">
+        <div class="container clearfix">
+            Would you like to Build your Dream Home with Us? <strong>Enquire Here</strong> <i class="icon-angle-right" style="top:3px;"></i>
+        </div>
+    </a>
+</div>
 
-    @endsection
+@endsection

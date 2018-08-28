@@ -74,14 +74,14 @@ $(function () {
 
 // apply job ------------------------------------------------//
 $(function () {
-$("#jobform").submit(function () {
- var pos=$('#jobform-position').val();
- $('#pos_err').html('');
+  $("#jobform").submit(function () {
+   var pos=$('#jobform-position').val();
+   $('#pos_err').html('');
 
-if(pos==0){
-  $('#pos_err').html('  ERROR: Please select appropriate position. ');
- return false;
-}
+   if(pos==0){
+    $('#pos_err').html('  ERROR: Please select appropriate position. ');
+    return false;
+  }
 
 // dataString = $("#jobform").serialize();
 // $('#formOutput').html(dataString);
@@ -100,12 +100,12 @@ $.ajax({
     processData: false,
     beforeSend: function(){
       $("#jobform-apply").attr("disabled", true);
-        $('#jobform-apply').html('Sending Application...');
+      $('#jobform-apply').html('Sending Application...');
     },
     success: function(data){
       $('#formOutput').html(data);
-        $('#jobform-apply').removeAttr("disabled");
-        $('#jobform-apply').html('Send Application');
+      $('#jobform-apply').removeAttr("disabled");
+      $('#jobform-apply').html('Send Application');
       window.setTimeout(function() {
        $(".alert").fadeTo(500, 0).slideUp(500, function(){
          $(this).remove(); 
@@ -115,10 +115,10 @@ $.ajax({
     },
     error:function(data){
      $('#jobform-apply').removeAttr("disabled");
-        $('#formOutput').html('Failure!</strong> Make sure all fields are filled with appropriate values.');
+     $('#formOutput').html('Failure!</strong> Make sure all fields are filled with appropriate values.');
 
-        $('#jobform-apply').html('Send Application');
-        window.setTimeout(function() {
+     $('#jobform-apply').html('Send Application');
+     window.setTimeout(function() {
        $(".alert").fadeTo(500, 0).slideUp(500, function(){
          $(this).remove(); 
        });
@@ -131,59 +131,58 @@ return false;  //stop the actual form post !important!
 // apply job ends --------------------------------------------//
 
 function setCookie(key, value) {
-            var expires = new Date();
-            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-        }
+  var expires = new Date();
+  expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+  document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
 
-        function getCookie(key) {
-            var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-            return keyValue ? keyValue[2] : null;
-        }
+function getCookie(key) {
+  var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+  return keyValue ? keyValue[2] : null;
+}
+
 // ------------POST form data to PHP controller--------------
-// $(function () {
-//   $("#widget-subscribe-form").submit(function () {
-//     dataString = $("#widget-subscribe-form").serialize();
-//     $('#formOutput').html('hellooo');
+$(function () {
+  $("#widget-subscribe-form").submit(function () {
+    dataString = $("#widget-subscribe-form").serialize();
 
-//    $.ajaxSetup({
-//     headers: {
-//       'X-CSRF-Token': $('#_token').val()
-//     }
-//   });
-//    alert(dataString);
-//    $.ajax({
-//     type: "POST",
-//     url: "/get-connect/subscribeEmail",
-//     dataType : 'text',
-//     data: dataString,
-//     return: false, 
-//     beforeSend: function(){
-//       $("#subscribeButton").attr("disabled", true);
-//       $('#subscribeButton').html('Saving details...');
-//     },
-//     success: function(data){
-//       $('#formOutput').html(data);
-//       //$('form :input').val("");
-//       $('#subscribeButton').removeAttr("disabled");
-//       $('#subscribeButton').html('Subscribe');
-//       // window.setTimeout(function() {
-//       //   window.location.reload();
-//       // }, 1000);
-//     },
-//     error:function(data){
-//       $('#subscribeButton').removeAttr("disabled");
-//       $('#formOutput').html('<strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-Token': $('#_token').val()
+      }
+    });
+    $.ajax({
+      type: "POST",
+      url: "/get-connect/subscribeEmail",
+      dataType : 'text',
+      data: dataString,
+      return: false, 
+      beforeSend: function(){
+        $("#subscribeButton").attr("disabled", true);
+        $('#subscribeButton').html('Subscribing...');
+      },
+      success: function(data){
+      $('#subscribeMsg').html(data);
+      //$('form :input').val("");
+      $('#subscribeButton').removeAttr("disabled");
+      $('#subscribeButton').html('Subscribe');
+      window.setTimeout(function() {
+        window.location.reload();
+      }, 1000);
+    },
+    error:function(data){
+      $('#subscribeButton').removeAttr("disabled");
+      $('#subscribeMsg').html('<strong>Failure!</strong> Something went wrong. Please refresh the page and try once again.');
 
-//       $('#subscribeButton').html('Subscribe');
-//       window.setTimeout(function() {
-//         $(".alert").fadeTo(500, 0).slideUp(500, function(){
-//           $(this).remove(); 
-//         });
-//       }, 5000);
-//     }
-//   });
-//         return false;  //stop the actual form post !important!
-//       });
-// });
+      $('#subscribeButton').html('Subscribe');
+      window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+        });
+      }, 5000);
+    }
+  });
+        return false;  //stop the actual form post !important!
+      });
+});
 // POST method to add product ends here--------------------------

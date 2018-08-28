@@ -50,7 +50,7 @@
           <form id="addCategoryForm">
             <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
             <div class="input-group">
-              <input type="text" name="category_name" id="category_name" class="w3-input w3-border" placeholder="Enter Category name" required>
+              <input type="text" name="category_name" id="category_name" class="w3-input" placeholder="Enter Category name" required>
               <div class="input-group-btn">
                 <button class="btn w3-button theme_bg" id="addCatBtn" type="submit">
                   <i class="fa fa-plus"></i>
@@ -61,7 +61,6 @@
             <div class="w3-text-red w3-col l12" id="errCategoryMsg">
             </div>
           </form>
-          <hr style="margin: 2px">
         </div>
 
         <div class="w3-col l12 w3-padding-small" id="allCategoryDiv">
@@ -113,24 +112,24 @@
             <div class="w3-col l12">
               <div class="col-lg-6 col-xs-12 col-sm-12 w3-margin-bottom">
                 <label>Brand Name:</label>
-                <input type="text" name="brand_name" class="w3-input w3-border" placeholder="Enter Brand name" required>
+                <input type="text" name="brand_name" class="w3-input" placeholder="Enter Brand name" required>
               </div>
               <div class="col-lg-6 col-xs-12 col-sm-12 w3-margin-bottom">
-                <label>External Link (optional):</label>
-                <input type="url" name="ext_link" class="w3-input w3-border" placeholder="Copy-Paste Catalog link">
-                
+                <label>Upload Catalog (optional):</label>
+                <input type="file" name="brand_catalog" style="padding: 5px 2px 5px 5px" class="w3-input" id="brand_catalog" placeholder="Upload Brand Catalog">
+                <div id="image_error" class="w3-text-red"></div>
               </div>
               <div class="col-lg-6 w3-margin-bottom">
                 <label>Brand Image:</label>
-                <input type="file" name="brand_image" onchange="readURL(this)" id="brand_image" class="w3-input w3-border" style="padding: 2px 2px 8px 2px" required>
+                <input type="file" name="brand_image" onchange="readURL(this)" id="brand_image" class="w3-input" style="padding: 5px 2px 5px 5px" required>
                 <div id="image_error" class="w3-text-red"></div>
               </div>
               <div class="col-lg-6 w3-padding w3-center">
-                <img src="" width="auto" id="imgPreview" height="150px" alt="Brand Image will be displayed here once chosen." class=" w3-centerimg img-thumbnail">
+                <img src="" width="auto" id="imgPreview" height="150px" alt="Brand Image will be displayed here once chosen." class=" w3-centerimg img-thumbnail" onerror="this.style.display='none'">
               </div>
               <div class="col-lg-12 col-sm-12 col-xs-12 w3-margin-bottom ">
                 <label>Brand Description:</label>
-                <textarea class="w3-input w3-border" name="description" placeholder="Type a short description about the Brand..." rows="4" required></textarea>
+                <textarea class="w3-input" name="description" placeholder="Type a short description about the Brand..." rows="4" required></textarea>
               </div>
             </div>
             <div class="col-lg-12 w3-center" id="btnsubmit">
@@ -154,15 +153,15 @@
         </li>
         @else
         @foreach ($brands as $br)
-        <div class="col-lg-4 col-sm-6 col-xs-6 w3-padding-small w3-margin-bottom">
-          <div class="w3-col l3 w3-padding-small" style="z-index: 1;position: absolute;">
+        <div class="col-lg-4 col-sm-6 col-xs-6 w3-margin-bottom">
+          <div class="w3-col l3 theme_bg" style="z-index: 1;position: absolute;border-bottom-right-radius:100%;">
             @if($br->status==0)
-            <a class="btn" ng-click="featureBrand({{$br->brand_id}},0)" style="padding: 0;margin: 0">
-            <span class="fa fa-star w3-text-orange w3-left" style="border:1px solid" title="Click here to unmark as Featured Brand"></span>
+            <a class="btn w3-padding-tiny" ng-click="featureBrand({{$br->brand_id}},0)" style="padding: 0;margin: 0 0 3px 0">
+              <span class="fa fa-star w3-medium w3-text-yellow w3-left" title="Click here to unmark as Featured Brand"></span>
             </a>
             @else
-            <a class="btn" ng-click="featureBrand({{$br->brand_id}},1)" style="padding: 0;margin: 0">
-            <span class="fa fa-star w3-left" style="border:1px solid" title="Click here to mark as Featured Brand"></span>
+            <a class="btn w3-padding-tiny" ng-click="featureBrand({{$br->brand_id}},1)" style="padding: 0;margin: 0 0 3px 0">
+              <span class="fa fa-star w3-text-white w3-medium w3-left" title="Click here to mark as Featured Brand"></span>
             </a>
             @endif
           </div>
@@ -202,17 +201,25 @@
                       <div class="col-lg-7">   
                         <div class="w3-col l12 w3-margin-bottom">
                           <label>Brand Name:</label>
-                          <input type="text" name="update_brand_name" class="w3-input w3-border" value="{{$br->brand_name}}" placeholder="Enter Brand name" required>
+                          <input type="text" name="update_brand_name" class="w3-input" value="{{$br->brand_name}}" placeholder="Enter Brand name" required>
                         </div>
                         <div class="w3-col l12 w3-margin-bottom">
-                          <label>External Link (optional):</label>
+                          <label>Brand Catalog:</label>
+                          <input type="file" name="update_catalog" id="update_catalog" class="w3-input" style="padding: 5px 2px 5px 5px">
                           <?php 
                           $link=$br->external_link;
-                          if($link=='Null'){
+                          if($link=='Null' || $link==''){
                             $link='';
                           }
-                          ?>
-                          <input type="url" name="update_ext_link" class="w3-input w3-border" value="<?php echo $link; ?>" placeholder="Copy-Paste Catalog link">                
+                          else{
+                            ?>
+                            <label>Uploaded: </label>
+                            <a class="w3-text-grey btn" target="_self" href="{{URL::to('/')}}/{{$link}}" download="{{$br->brand_name}} Catalog" style="padding:0"><b><i class="fa fa-download"></i> {{$br->brand_name}} Catalog </b></a>
+                            <?php
+                          }
+                          ?> 
+                          <input type="hidden" name="uploaded_catalog" id="uploaded_catalog" value="{{$link}}">
+
                         </div>                 
                       </div>                    
                     </div>
@@ -220,7 +227,7 @@
                     <div class="w3-col l12">
                       <div class="col-lg-12 w3-margin-bottom ">
                         <label>Brand Description:</label>
-                        <textarea class="w3-input w3-border" name="update_description" placeholder="Type a short description about the Brand..." rows="4" required>{{$br->description}}</textarea>
+                        <textarea class="w3-input" name="update_description" placeholder="Type a short description about the Brand..." rows="4" required>{{$br->description}}</textarea>
                       </div>
                     </div>
                     <input type="hidden" name="id" value="{{$br->brand_id}}">
@@ -229,8 +236,8 @@
                       <button type="submit" id="updateForm_{{$br->brand_id}}" class="btn theme_bg"> Save Changes </button>
                     </div>
                     <div class="col-lg-offset-3 col-lg-6 w3-center" id="update_formOutput_{{$br->brand_id}}"></div>
-</form>
-                  </div>
+                  </form>
+                </div>
                 
               </div>
               <script type="text/javascript">
@@ -295,59 +302,139 @@
 <!-- Add architects div -->
 
 
-<div class="w3-col l12 w3-white w3-round w3-padding w3-margin-top theme_text">
-  <h4 class="theme_text"><i class="fa fa-building"></i> Add Architect:</h4>
+<div class="w3-col l12 w3-white w3-round w3-margin-top theme_text" style="padding: 16px">
+
   <div id="archOutput"></div>
   <!-- add architect form -->
-  <div class="w3-col l12">
-    <div class="col-lg-3"></div>
-    <div class="w3-col l6" style="border:1px dotted">
-      <form id="addArchitectForm">    
-        <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">          
-        <div class="w3-col l12 w3-margin-top">
-          <div class="col-lg-6 w3-margin-bottom">
-            <label>Architect Name / Company:</label>
-            <input type="text" name="arch_name" class="w3-input w3-border" placeholder="Enter Architect / Company Name" required>
+  <div class="col-lg-12">
+    <div class="col-lg-8">
+      <div class="w3-col l12 w3-padding" style="border:1px dotted">
+        <h4 class="theme_text"><i class="fa fa-building"></i> Add Architect:</h4>
+        <form id="addArchitectForm">    
+          <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">          
+          <div class="w3-col l12 w3-margin-top">
+            <div class="col-lg-6 w3-margin-bottom">
+              <label>Architect Name / Company:</label>
+              <input type="text" name="arch_name" class="w3-input" placeholder="Enter Architect / Company Name" required>
+            </div>
+            <div class="col-lg-6 w3-margin-bottom">
+              <label>Architect Email:</label>
+              <input type="email" name="arch_email" class="w3-input" placeholder="Enter Architect Email-Id" required>
+            </div>
           </div>
-          <div class="col-lg-6 w3-margin-bottom">
-            <label>Architect Email:</label>
-            <input type="email" name="arch_email" class="w3-input w3-border" placeholder="Enter Architect Email-Id" required>
+          <div class="w3-col l12">
+            <div class="col-lg-6 w3-margin-bottom">
+              <label>Architect Landline (optional):</label>
+              <input type="number" name="arch_landline" class="w3-input" placeholder="Enter Architect Landline number">
+            </div>
+            <div class="col-lg-6 w3-margin-bottom">
+              <label>Architect Mobile (optional):</label>
+              <input type="number" name="arch_mobile" class="w3-input" placeholder="Enter Architect Mobile Number">
+            </div>
           </div>
-        </div>
-        <div class="w3-col l12">
-          <div class="col-lg-6 w3-margin-bottom">
-            <label>Architect Landline (optional):</label>
-            <input type="number" name="arch_landline" class="w3-input w3-border" placeholder="Enter Architect Landline number">
+          <div class="w3-col l12">
+            <div class="col-lg-12 w3-margin-bottom">
+              <label>Architect Address:</label>
+              <textarea class="w3-input" name="arch_address" placeholder="Enter Architect Address here..." rows="4"></textarea>
+            </div>
+            <div class="col-lg-12 w3-margin-bottom">
+              <label>
+                <input type="checkbox" name="addtoSubscriber" style="margin-top: 2px">
+                Check this to add Architect to Subscriber's List.
+              </label>
+            </div>
           </div>
-          <div class="col-lg-6 w3-margin-bottom">
-            <label>Architect Mobile (optional):</label>
-            <input type="number" min="9999999999" name="arch_mobile" class="w3-input w3-border" placeholder="Enter Architect Mobile Number">
+          <div class="col-lg-12 w3-center w3-margin-bottom" id="archSubmit">
+            <button class="btn theme_bg w3-center" type="submit"><i class="fa fa-plus"></i>  Add Architect </button>
           </div>
-        </div>
-        <div class="w3-col l12">
-          <div class="col-lg-12 w3-margin-bottom">
-            <label>Architect Address:</label>
-            <textarea class="w3-input w3-border" name="arch_address" placeholder="Enter Architect Address here..." rows="4"></textarea>
-          </div>
-        </div>
-        <div class="col-lg-12 w3-center w3-margin-bottom" id="archSubmit">
-          <button class="btn theme_bg w3-center" type="submit"><i class="fa fa-plus"></i>  Add Architect </button>
-        </div>
 
-      </form>
+        </form>
+
+      </div>
     </div>
-    <div class="col-lg-3"></div>
-  </div>
+    
+    <div class="col-lg-4">
+      <div class="w3-col l12 w3-padding" style="border:1px dotted">
+        <h4 class="theme_text"><i class="fa fa-users"></i> Subscribers List:</h4>
 
-  <div class="w3-col l12 w3-margin-top">
-    <hr>
-    <label class="theme_text"><i class="fa fa-database"></i> Architect List:</label>
-    <form id="archListForm">
+        <div class="w3-col l12 w3-padding-small" id="allSubscriberDiv">
+          <div class="w3-col l12 w3-right">
+            <?php 
+            $countSubscriber=0;
+            if(!empty($subscribers)){
+            $countSubscriber=count($subscribers);
+            }
+            ?>
+            <span class="w3-text-grey w3-right">Total subscribers: <b>{{$countSubscriber}}</b></span>
+          </div>
+            <div class="w3-col l12 w3-border" style="height: 215px;overflow-y: auto;">
+              <ul style="list-style: none;padding: 0">
+
+
+               @if(empty($subscribers))
+               <li class="w3-border-bottom w3-padding w3-center w3-text-red">
+                <span>
+                  No Subscriber Found
+                </span>
+              </li>
+              @else
+              @foreach ($subscribers as $sub)
+              <li class="w3-border-bottom" style="padding: 0 16px">
+                <div class="w3-row">
+
+                  <div class="w3-col l10 m10 s10">
+                    <span>
+                      {{$sub->subscriber_email}}
+                    </span>
+                  </div>
+                  <div class="w3-col l2 m2 s2">
+                    <a ng-click="delSubscriber('{{$sub->subscriber_id}}')" title="Delete Subscriber" class="btn w3-right" style="padding: 0"><i class="fa fa-close"></i></a>
+                  </div>
+                </div>
+              </li>
+              @endforeach
+
+              @endif
+            </ul>
+          </div>
+          <button class="theme_bg btn w3-small w3-margin-top" type="submit" id="SendSubscriberBtn" style="margin: 0"><i class="fa fa-paper-plane w3-medium"></i> Send Mail to Subscribers</button>
+          <p id="SubcriberMailErrMsg"></p>
+      </div>
+
+      <!-- upload mail format -->
+
+      <div class="w3-col l12 w3-padding-small">
+        <hr style="margin-top: 0">
+        <form id="subscriberMailForm">
+          <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+          <label>Upload Subscription Mail File:</label>
+          <div class="input-group">
+            <input type="file" style="padding: 5px 2px 5px 5px" onchange="readMailFile(this)" name="mail_document" id="mail_document" class="w3-input" required>
+            <div class="input-group-btn">
+              <button class="btn w3-button theme_bg" id="addMailFormatBtn" type="submit">
+                <i class="fa fa-upload"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="w3-text-red w3-col l12" id="errMailerMsg">
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>  
+</div>
+
+<div class="w3-col l12 w3-margin-top">
+  <hr>
+  <label class="theme_text"><i class="fa fa-database"></i> Architect List:</label>
+  <form id="archListForm">
     <table id="datatable" class="table table-striped table-bordered">
 
       <thead>
         <tr>
-          <th class="w3-center">#</th>
+          <!-- <th class="w3-center">#</th> -->
           <th class="w3-center">Name</th>
           <th class="w3-center">Address</th>
           <th class="w3-center">LandLine</th>
@@ -363,7 +450,7 @@
         @if($arch!='')
         @foreach($arch as $ar)
         <tr>
-          <td><input type="checkbox" class="w3-input" value="{{$ar->arch_email}}" name="architect_list[]" id="arch_list_{{$ar->arch_id}}"></td>
+          <!-- <td><input type="checkbox" class="w3-input" value="{{$ar->arch_email}}" name="architect_list[]" id="arch_list_{{$ar->arch_id}}"></td> -->
           <td>{{$ar->arch_name}}</td>
           <td>{{$ar->arch_address}}</td>
           <td>@if($ar->arch_landline=='0')N/A @else{{$ar->arch_landline}}@endif</td>
@@ -380,11 +467,11 @@
         @endif                        
       </tbody>
     </table>
-    <button class="theme_bg btn w3-small" type="submit" id="SendMailBtn" style="margin: 0"><i class="fa fa-paper-plane w3-medium"></i> Send Mail to Marked</button>
+    <!-- <button class="theme_bg btn w3-small" type="submit" id="SendMailBtn" style="margin: 0"><i class="fa fa-paper-plane w3-medium"></i> Send Mail to Marked</button> -->
     <span id="ArchMailErrMsg"></span>
   </form>
 
-  </div>
+</div>
 
 </div>
 

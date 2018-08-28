@@ -93,12 +93,20 @@
 
                                     <div class="w3-col l12">
                                         <!-- Brands -->
-                                        @if(empty($related_products))
+                                        @if(empty($related_brands))
                                         <div class="w3-col l12 w3-center w3-padding">
                                             <h3>No Brands Available</h3>
                                         </div>
                                         @else
-                                        @foreach ($related_products as $br)
+                                        <?php $curr_brand=0; ?>
+                                        @foreach ($related_brands as $br)
+                                        <?php 
+                                        if($br->brand_id==$curr_brand){
+                                            continue;
+                                        }else{
+                                            $curr_brand=$br->brand_id;
+                                        }
+                                        ?>
                                         <div class="w3-col l2 s6 w3-padding-small w3-margin-bottom">
                                           <div class="w3-col l12">
                                             <a class="btn w3-opacity w3-hover-opacity-off" href="{{URL::to('/')}}/brands/info/<?php echo base64_encode($br->brand_id); ?>" style="padding: 0;margin: 0">
@@ -159,7 +167,7 @@
                             <!-- Related Portfolio Items ============================================= -->
                             <h4>Related Projects:</h4>
                             @if($related_projects!='')
-                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="2" data-items-sm="3" data-items-xl="4">
+                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="3" data-items-xl="4">
                                 <?php $curr_proj=0; ?>
                                 @foreach($related_projects as $proj)
                                 <?php 

@@ -99,7 +99,8 @@
                                             @foreach($image_arr as $img)
                                             <div class="slide w3-center" style="max-height: 600px">
                                                 <a href="{{URL::to('/')}}/{{$img}}" data-lightbox="gallery-item">
-                                                    <img class="image_fade" style="height: 600px" class="img" src="{{URL::to('/')}}/{{$img}}" alt="{{$proj_details->proj_name}} Gallery">
+                                                    <img class="image_fade w3-hide-small" style="height: 600px" class="img img-responsive" src="{{URL::to('/')}}/{{$img}}" alt="{{$proj_details->proj_name}} Gallery">
+                                                    <img class="image_fade w3-hide-large w3-hide-medium" style="height: 150px" class="img img-responsive" src="{{URL::to('/')}}/{{$img}}" alt="{{$proj_details->proj_name}} Gallery">
                                                 </a>
                                             </div>
                                             @endforeach
@@ -206,7 +207,7 @@
                             <!-- Related Portfolio Items ============================================= -->
                             <h4>Related Products:</h4>
                             @if($related_products!='')
-                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="2" data-items-sm="3" data-items-xl="4">
+                            <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="3" data-items-xl="4">
                                 <?php $curr_prod=0; ?>
                                 @foreach($related_products as $prod)
                                 <?php 

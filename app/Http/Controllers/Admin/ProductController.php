@@ -72,7 +72,7 @@ class ProductController extends Controller
             $image_json=json_encode($img_arr);
         }
 
-         // file uploading code
+        // file uploading code
         if($request->hasfile('prod_file'))
         {
             //$img_arr=array();
@@ -87,7 +87,7 @@ class ProductController extends Controller
             $file_json=json_encode($file_arr);
         }
 
-          // video link uploading code
+        // video link uploading code
         if($request->has('prod_video') && is_array($request->prod_video) && count($request->prod_video))
         {
             foreach($request->input('prod_video') as $image)

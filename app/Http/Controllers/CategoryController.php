@@ -55,6 +55,17 @@ class CategoryController extends Controller
         if($related_products->isEmpty()){
             $related_products='';   //if not found
         }
+        
+        // get related brands from DB
+        $related_brands = DB::table('product_tab')
+        ->join('brand_tab', 'brand_tab.brand_id', '=', 'product_tab.brand_id')
+        ->select('*')
+        ->where('product_tab.cat_id', '=', base64_decode($request->segment(3)))
+        ->orderBy('brand_tab.brand_id')
+        ->get();
+        if($related_brands->isEmpty()){
+            $related_brands='';   //if not found
+        }
 
         // get related projects from DB
         $related_projects = DB::table('prod_proj_assoc_tab')
@@ -67,8 +78,9 @@ class CategoryController extends Controller
         if($related_projects->isEmpty()){
             $related_projects='';   //if not found
         }
+        
 
-        return view('categories',['category_details'=>$cat_details,'related_products'=>$related_products,'related_projects'=>$related_projects,'menuCategories' => $menuCategories]);
+        return view('categories',['category_details'=>$cat_details,'related_products'=>$related_products,'related_brands'=>$related_brands,'related_projects'=>$related_projects,'menuCategories' => $menuCategories]);
     }
     
 }

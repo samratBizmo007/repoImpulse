@@ -28,7 +28,7 @@
 			<h3>Trending Products</h3>
 			<p>Checkout our new Trending products here...</p>
 		</div>
-		<div class="col-lg-12">
+		<div class="col-lg-12" style="padding: 40px;background-color: lightgrey">
 			<ul style="list-style: none;">
 				@foreach($products as $prod)
 				<li>

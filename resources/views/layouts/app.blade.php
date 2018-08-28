@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{{ asset('template/images/impulse-logo-small.png') }}}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -34,28 +35,6 @@
     <script src="{{ asset('assets/js/module/common.js') }}"></script>
     <!-- External JavaScripts ============================================= -->
     <script src="{{ asset('template/js/jquery.js') }}"></script>
-    
-    <script>
-        $(document).ready(function(){
-            $.ajax({
-                url: "https://geoip-db.com/jsonp",
-                jsonpCallback: "callback",
-                dataType: "jsonp",
-                success: function( location ) {
-            // $('#country').html(location.country_name);
-            // $('#state').html(location.state);
-            $('#curr_location').html('<a>'+location.city+'</a>');
-            $('#curr_location_text').val(location.city);
-            $.cookie('Location', location.city, { expires: 30});
-
-            // $('#latitude').html(location.latitude);
-            // $('#longitude').html(location.longitude);
-            // $('#ip').html(location.IPv4);  
-        }
-    }); 
-        });
-        
-    </script>
 </head>
 <body class="stretched"> 
     <!-- Document Wrapper
@@ -123,18 +102,22 @@
                     </div><!-- #logo end -->
                     <ul class="header-extras" style="margin-bottom:24px">
                         <li>
+                            <a href="tel:+918411009080">
                             <i class="i-plain icon-call nomargin"></i>
                             <div class="he-text">
                                 Call Us
                                 <span>(91) 84110 09080</span>
                             </div>
+                            </a>
                         </li>
                         <li>
+                            <a href="mailto:info@impulsetrend.com">
                             <i class="i-plain icon-line2-envelope nomargin"></i>
                             <div class="he-text">
                                 Email Us
                                 <span>info@impulsetrend.com</span>
                             </div>
+                            </a>
                         </li>
                         <li>
                             <i class="i-plain icon-line-clock nomargin"></i>
@@ -159,7 +142,7 @@
 
                             <ul>
                                 <li class="<?php if(Route::current()->getName() == '/'){ echo 'current';} ?>"><a href="{{URL::to('/')}}"><div>Home</div></a></li>
-                                <li class="<?php if(Route::current()->getName() == '/contact-us' || Route::current()->getName() == '/career' || Route::current()->getName() == '/about-us'){ echo 'current';} ?>"><a href=""><div>Company</div></a>
+                                <li class="<?php if(Route::current()->getName() == '/contact-us' || Route::current()->getName() == '/career' || Route::current()->getName() == '/about-us'){ echo 'current';} ?>"><a href="{{URL::to('/')}}/about-us"><div>Company</div></a>
                                     <ul>
                                         <li><a href="{{URL::to('/')}}/about-us"><div>About Company</div></a></li>
                                         <li><a href="{{URL::to('/')}}/contact-us"><div>Contact Us</div></a></li>
@@ -290,18 +273,13 @@
 
                                 <img src="{{URL::to('/')}}/template/images/impulse-logo.png" alt="" class="alignleft" style="width: 230px;height:auto;margin-top: 8px; padding-right: 18px; border-right: 1px solid #4A4A4A;">
 
-                                <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards with a Retina &amp; Responsive Approach. Browse the amazing Features this template offers.</p>
+                                <p>We are fully aware of the tremendous, important responsibility on your shoulders, as creative professionals, to specify or select the latest and the best interior and exterior components for your projects.</p>
 
                                 <div class="line" style="margin: 30px 0;"></div>
                                 <div class="w3-col l6">
-                                    <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
-                                        <i class="icon-facebook"></i>
-                                        <i class="icon-facebook"></i>
-                                    </a>
-                                    <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
-                                <!-- 
-                                    <div class="widget subscribe-widget clearfix">
-                                        <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
+                                                                   
+                                    <div class="widget subscribe-widget clearfix w3-margin-bottom">
+                                        <h5><strong>Subscribe</strong> to Our Newsletter and get updates:</h5>
                                         <div class="widget-subscribe-form-result"></div>
                                         <form id="widget-subscribe-form" class="nobottommargin" action="/get-connect/subscribeEmail" method="POST">
                                             <div class="input-group divcenter">
@@ -315,9 +293,9 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <div id="formOutput"></div>
+                                        <div id="subscribeMsg"></div>
                                     </div>
-                                --></div>
+                            </div>
                             </div>
 
                         </div>
@@ -340,6 +318,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-lg-12 bottommargin-sm">
+                                        <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
+                                        <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
+                                    </a>
+                                    <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
+
+                                    </div>
                                 </div>
 
                             </div>

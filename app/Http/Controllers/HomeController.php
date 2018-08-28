@@ -62,6 +62,7 @@ class HomeController extends Controller
         ->orderBy('product_tab.trending','DESC')
         ->limit(6)
         ->get();
+        // print_r($products);die();
         if($products->isEmpty()){
             $products='';   //if not found
         }
